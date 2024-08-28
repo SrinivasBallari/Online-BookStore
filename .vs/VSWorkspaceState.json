@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\server",
+    "\\server\\Controllers",
+    "\\server\\DTO",
+    "\\server\\Repositories",
+    "\\server\\Services"
+  ],
+  "SelectedNode": "\\server\\Models",
+  "PreviewInSolutionExplorer": false
+}

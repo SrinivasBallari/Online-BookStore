@@ -63,6 +63,7 @@ namespace OnlineBookStore
             // Register Services
             builder.Services.AddTransient(typeof(IAuthService), typeof(AuthService));
             builder.Services.AddTransient(typeof(IAuthRepo), typeof(AuthRepo));
+            builder.Services.AddTransient(typeof(IOrderRepo), typeof(OrderRepo));
             builder.Services.AddTransient(typeof(IPasswordHasher<User>),typeof(PasswordHasher<User>));
             builder.Services.AddTransient(typeof(ITokenGenerator),typeof(JwtTokenGenerator));
             
