@@ -1,4 +1,5 @@
-﻿using server.Models.DB
+﻿using server.Models.DB;
+using server.DTO;
 
 namespace server.Repositories
 {
@@ -8,6 +9,6 @@ namespace server.Repositories
         Task<List<Order>> GetAllOrdersbyMonthAsync(int month,int year);
         Task<List<Order>> GetAllOrdersbyEmailAsync(string email);
         Task<List<OrderItem>> GetOrderDetailsAsync(int OrderId);
-        Task<Order> PlaceOrderAsync(Order order);
+        Task<Order> PlaceOrderAsync(OrderDto order);
     }
 }

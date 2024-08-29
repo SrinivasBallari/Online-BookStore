@@ -8,6 +8,8 @@ using server.Policies;
 using server.Services;
 using server.Repositories;
 using System;
+using System.Text.Json.Serialization;
+
 
 namespace OnlineBookStore
 {
@@ -28,7 +30,13 @@ namespace OnlineBookStore
                                .AllowAnyMethod();
                     });
             });
-            builder.Services.AddControllers();
+           
+
+            builder.Services.AddControllers()
+               .AddJsonOptions(options =>
+               {
+                   options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+               });
 
             var Audience = builder.Configuration.GetValue<string>("Audience");
             var Issuer = builder.Configuration.GetValue<string>("Issuer");
@@ -66,7 +74,8 @@ namespace OnlineBookStore
             builder.Services.AddTransient(typeof(IOrderRepo), typeof(OrderRepo));
             builder.Services.AddTransient(typeof(IPasswordHasher<User>),typeof(PasswordHasher<User>));
             builder.Services.AddTransient(typeof(ITokenGenerator),typeof(JwtTokenGenerator));
-            
+            builder.Services.AddTransient(typeof(IOrderService), typeof(OrderService));
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Logging.ClearProviders();
