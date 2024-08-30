@@ -30,6 +30,10 @@ namespace OnlineBookStore
             });
             builder.Services.AddControllers();
 
+            builder.Logging.ClearProviders();
+            builder.Logging.AddConsole();  
+            builder.Logging.AddDebug();    
+
             var Audience = builder.Configuration.GetValue<string>("Audience");
             var Issuer = builder.Configuration.GetValue<string>("Issuer");
             var Security = builder.Configuration.GetValue<string>("Secret");
@@ -63,9 +67,11 @@ namespace OnlineBookStore
             // Register Services
             builder.Services.AddTransient(typeof(IAuthService), typeof(AuthService));
             builder.Services.AddTransient(typeof(IAuthRepo), typeof(AuthRepo));
-            builder.Services.AddTransient(typeof(IPasswordHasher<User>),typeof(PasswordHasher<User>));
-            builder.Services.AddTransient(typeof(ITokenGenerator),typeof(JwtTokenGenerator));
-            
+            builder.Services.AddTransient(typeof(IPasswordHasher<User>), typeof(PasswordHasher<User>));
+            builder.Services.AddTransient(typeof(ITokenGenerator), typeof(JwtTokenGenerator));
+            builder.Services.AddTransient(typeof(IBookRepo),typeof(BookRepo));
+            builder.Services.AddTransient(typeof(IBookService),typeof(BookService));
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Logging.ClearProviders();
@@ -93,7 +99,7 @@ namespace OnlineBookStore
             Console.WriteLine("Server is up: http://localhost:5187");
             Console.WriteLine("Swagger is up: http://localhost:5187/swagger/index.html");
             app.Run();
-            
+
         }
     }
 }
