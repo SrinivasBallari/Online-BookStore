@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using server.Models.DB;
+using server.DTO;
 
 namespace server.Repositories
 {
@@ -23,5 +24,17 @@ namespace server.Repositories
                 throw;
             }
         }
+
+        /*public async Task<BooksAddedResponseDTO> AddBooksAsync(List<Book> books)
+        {
+            try{
+                var result = await _context.Books.AddRangeAsync(books);
+                return new BooksAddedResponseDTO { message="added books to the books table" , status="success"};
+            }
+            catch{
+                _logger.LogError(ex, "Error Occured at AddBooksAsync in Repo Layer");
+                throw;
+            }
+        }*/
     }
 }

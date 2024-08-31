@@ -5,8 +5,8 @@ namespace server.Policies
 {
     public class SecurityPolicy
     {
-        public const string Admin = "Admin";
-        public const string Customer = "Customer";
+        public const string Admin = "admin";
+        public const string Customer = "customer";
 
         
         public static AuthorizationPolicy AdminPolicy()

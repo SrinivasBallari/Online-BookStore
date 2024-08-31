@@ -18,6 +18,7 @@ namespace OnlineBookStore
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Add services to the container.
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowLocalhost4200",
@@ -29,25 +30,22 @@ namespace OnlineBookStore
                     });
             });
             builder.Services.AddControllers();
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
-            builder.Logging.ClearProviders();
-            builder.Logging.AddConsole();  
-            builder.Logging.AddDebug();    
+            var Aud = builder.Configuration.GetValue<string>("Audience");
+            var iss = builder.Configuration.GetValue<string>("Issuer");
+            var sec = builder.Configuration.GetValue<string>("Secret");
 
-            var Audience = builder.Configuration.GetValue<string>("Audience");
-            var Issuer = builder.Configuration.GetValue<string>("Issuer");
-            var Security = builder.Configuration.GetValue<string>("Secret");
-
-            var keybytes = System.Text.Encoding.UTF8.GetBytes(Security!);
+            var keybytes = System.Text.Encoding.UTF8.GetBytes(sec);
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(c =>
             {
-                c.TokenValidationParameters = new TokenValidationParameters()
+                c.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
                 {
                     ValidateAudience = true,
                     ValidateIssuer = true,
-                    ValidIssuer = Issuer,
-                    ValidAudience = Audience,
+                    ValidIssuer = iss,
+                    ValidAudience = Aud,
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(keybytes)
                 };
@@ -55,37 +53,39 @@ namespace OnlineBookStore
 
             builder.Services.AddAuthorization(c =>
             {
+
                 c.AddPolicy(SecurityPolicy.Admin, SecurityPolicy.AdminPolicy());
                 c.AddPolicy(SecurityPolicy.Customer, SecurityPolicy.CustomerPolicy());
             });
+
+
 
             builder.Services.AddDbContext<BookStoreDbContext>(config =>
             {
                 string connectionString = builder.Configuration.GetConnectionString("DevConnectionString")!;
                 config.UseSqlServer(connectionString);
             });
-            // Register Services
             builder.Services.AddTransient(typeof(IAuthService), typeof(AuthService));
             builder.Services.AddTransient(typeof(IAuthRepo), typeof(AuthRepo));
             builder.Services.AddTransient(typeof(IPasswordHasher<User>), typeof(PasswordHasher<User>));
             builder.Services.AddTransient(typeof(ITokenGenerator), typeof(JwtTokenGenerator));
-            builder.Services.AddTransient(typeof(IBookRepo),typeof(BookRepo));
-            builder.Services.AddTransient(typeof(IBookService),typeof(BookService));
-
+            builder.Services.AddTransient(typeof(IBookRepo), typeof(BookRepo));
+            builder.Services.AddTransient(typeof(IBookService), typeof(BookService));
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
             builder.Logging.ClearProviders();
-            builder.Logging.AddEventSourceLogger();
+            //builder.Logging.AddLog4Net();
+
 
             var app = builder.Build();
 
+            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
-            // app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseHttpsRedirection();
             app.UseCors("AllowLocalhost4200");
@@ -96,10 +96,7 @@ namespace OnlineBookStore
 
             app.MapControllers();
 
-            Console.WriteLine("Server is up: http://localhost:5187");
-            Console.WriteLine("Swagger is up: http://localhost:5187/swagger/index.html");
             app.Run();
-
         }
     }
 }

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using server.Policies;
 using server.Services;
+using server.ActionFilters;
+using server.Models.DB;
 
 namespace server.Controllers
 {
@@ -20,7 +22,7 @@ namespace server.Controllers
         }
 
         [HttpGet("books")]
-        [Authorize]
+        [TokenValidationFilter]
         public async Task<IActionResult> GetAllBooksAsync()
         {
             try

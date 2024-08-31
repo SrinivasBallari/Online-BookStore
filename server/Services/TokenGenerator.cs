@@ -17,12 +17,10 @@ namespace server.Services
 
         public string GenerateToken(User user)
         {
-            var claims = new[]
+            List<Claim> claims = new List<Claim>()
             {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Name!),
-            new Claim(JwtRegisteredClaimNames.Email, user.Email!),
-            new Claim(ClaimTypes.Role, user.Role)
-        };
+                new Claim(JwtRegisteredClaimNames.Email,user.Email),
+            };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Secret"]!));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -32,7 +30,8 @@ namespace server.Services
                 audience: _configuration["Audience"],
                 claims: claims,
                 expires: DateTime.Now.AddHours(48),
-                signingCredentials: creds);
+                signingCredentials: creds
+            );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
