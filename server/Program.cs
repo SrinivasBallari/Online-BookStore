@@ -106,7 +106,7 @@ namespace OnlineBookStore
             builder.Services.AddSwaggerGen();
 
             builder.Logging.ClearProviders();
-            builder.Logging.AddLog4Net();
+            
 
 
             var app = builder.Build();
