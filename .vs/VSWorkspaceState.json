@@ -2,11 +2,13 @@
   "ExpandedNodes": [
     "",
     "\\server",
+    "\\server\\ActionFilters",
     "\\server\\Controllers",
-    "\\server\\DTO",
+    "\\server\\Models",
+    "\\server\\Models\\DB",
     "\\server\\Repositories",
     "\\server\\Services"
   ],
-  "SelectedNode": "\\server\\Models",
+  "SelectedNode": "\\server\\Controllers\\BookController.cs",
   "PreviewInSolutionExplorer": false
 }

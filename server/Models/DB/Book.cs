@@ -27,6 +27,8 @@ public partial class Book
 
     public string? ImageUrl { get; set; }
 
+    public int Quantity { get; set; }
+
     public virtual Author? Author { get; set; }
 
     public virtual ICollection<Cart>? Carts { get; set; } = new List<Cart>();
