@@ -1,10 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using server.Policies;
 using server.Services;
 using server.ActionFilters;
-using server.Models.DB;
 
 namespace server.Controllers
 {
@@ -22,8 +19,8 @@ namespace server.Controllers
         }
 
         [Authorize]
-        [HttpGet("books")]
         [TokenValidationFilter]
+        [HttpGet("books")]
         public async Task<IActionResult> GetAllBooksAsync()
         {
             try

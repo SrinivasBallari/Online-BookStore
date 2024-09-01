@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using server.Models.DB;
 using System.Security.Claims;
 
@@ -14,16 +13,13 @@ namespace server.ActionFilters
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             var token = context.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-
             if (token != null)
             {
                 var handler = new JwtSecurityTokenHandler();
                 var jwtToken = handler.ReadToken(token) as JwtSecurityToken;
-
                 if (jwtToken != null)
                 {
-                    var emailClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "email")?.Value;
-
+                    var emailClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Email)?.Value;
                     if (emailClaim != null)
                     {
                         // Check if a user with this Email and Role exists in the database

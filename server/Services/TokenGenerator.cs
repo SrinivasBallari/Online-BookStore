@@ -26,7 +26,8 @@ namespace server.Services
             {
                 new Claim(JwtRegisteredClaimNames.Iss,issuer),
                 new Claim(JwtRegisteredClaimNames.Aud,audience),
-                new Claim(ClaimTypes.Role,user.Role)
+                new Claim(ClaimTypes.Role,user.Role),
+                new Claim(ClaimTypes.Email,user.Email)
             };
 
             byte[] secretBytes=System.Text.Encoding.UTF8.GetBytes(secret);
