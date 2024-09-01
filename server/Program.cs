@@ -7,7 +7,6 @@ using server.Models.DB;
 using server.Policies;
 using server.Services;
 using server.Repositories;
-using System;
 
 namespace OnlineBookStore
 {
@@ -32,33 +31,56 @@ namespace OnlineBookStore
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
-            var Aud = builder.Configuration.GetValue<string>("Audience");
-            var iss = builder.Configuration.GetValue<string>("Issuer");
-            var sec = builder.Configuration.GetValue<string>("Secret");
+            var audience = builder.Configuration.GetValue<string>("Audience");
+            var issuer = builder.Configuration.GetValue<string>("Issuer");
+            var secret = builder.Configuration.GetValue<string>("Secret");
 
-            var keybytes = System.Text.Encoding.UTF8.GetBytes(sec);
+            var keyBytes = System.Text.Encoding.UTF8.GetBytes(secret);
 
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(c =>
-            {
-                c.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
+                AddJwtBearer(c =>
                 {
-                    ValidateAudience = true,
-                    ValidateIssuer = true,
-                    ValidIssuer = iss,
-                    ValidAudience = Aud,
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(keybytes)
-                };
-            });
+                    c.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = issuer,
+                        ValidateAudience = true,
+                        ValidAudience = audience,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(keyBytes)
+                    };
+                    c.Events = new JwtBearerEvents
+                    {
+                        OnAuthenticationFailed = context =>
+                        {
+                            Console.WriteLine($"Authentication failed: {context.Exception.Message}");
+                            Console.WriteLine($"Exception StackTrace: {context.Exception.StackTrace}");
+                            return Task.CompletedTask;
+                        },
+                        OnChallenge = context =>
+                        {
+                            context.HandleResponse();
+                            context.Response.StatusCode = 401;
+                            context.Response.ContentType = "application/json";
+                            var result = new { message = "Authentication failed." };
+                            return context.Response.WriteAsJsonAsync(result);
+                        },
+                        OnForbidden = context =>
+                        {
+                            context.Response.StatusCode = 403;
+                            context.Response.ContentType = "application/json";
+                            var result = new { message = "Access denied." };
+                            return context.Response.WriteAsJsonAsync(result);
+                        }
+                    };
+                });
 
-            builder.Services.AddAuthorization(c =>
+
+            builder.Services.AddAuthorization(config =>
             {
-
-                c.AddPolicy(SecurityPolicy.Admin, SecurityPolicy.AdminPolicy());
-                c.AddPolicy(SecurityPolicy.Customer, SecurityPolicy.CustomerPolicy());
+                config.AddPolicy(SecurityPolicy.Admin, SecurityPolicy.AdminPolicy());
+                config.AddPolicy(SecurityPolicy.Customer, SecurityPolicy.CustomerPolicy());
             });
-
-
 
             builder.Services.AddDbContext<BookStoreDbContext>(config =>
             {
@@ -75,7 +97,7 @@ namespace OnlineBookStore
             builder.Services.AddSwaggerGen();
 
             builder.Logging.ClearProviders();
-            //builder.Logging.AddLog4Net();
+            builder.Logging.AddLog4Net();
 
 
             var app = builder.Build();
@@ -87,7 +109,6 @@ namespace OnlineBookStore
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
             app.UseCors("AllowLocalhost4200");
 
             app.UseAuthentication();

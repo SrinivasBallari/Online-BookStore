@@ -21,6 +21,7 @@ namespace server.Controllers
             _logger = logger;
         }
 
+        [Authorize]
         [HttpGet("books")]
         [TokenValidationFilter]
         public async Task<IActionResult> GetAllBooksAsync()

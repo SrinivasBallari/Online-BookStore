@@ -12,7 +12,7 @@ using server.Models.DB;
 namespace server.Migrations
 {
     [DbContext(typeof(BookStoreDbContext))]
-    [Migration("20240829044624_InitialCreate")]
+    [Migration("20240901040130_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -116,6 +116,9 @@ namespace server.Migrations
                     b.Property<int?>("PublisherId")
                         .HasColumnType("int")
                         .HasColumnName("publisher_id");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .HasMaxLength(255)
