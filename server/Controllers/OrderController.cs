@@ -7,6 +7,7 @@ using server.DTO;
 using server.Models.DB;
 using server.Services;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace server.Controllers
 {
@@ -22,11 +23,12 @@ namespace server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        [Authorize(Roles = "customer")]
+        public async Task<IActionResult> GetAllOrdersAsync()
         {
             try
             {
-                var result = await _orderService.AllOrdersServiceAsync();
+                var result = await _orderService.GetAllOrdersServiceAsync();
                 return Ok(result);
             }
             catch (Exception ex)
@@ -37,11 +39,12 @@ namespace server.Controllers
         }
 
         [HttpGet("monthly/{month}/{year}")]
-        public async Task<IActionResult> Get(int month, int year)
+        
+        public async Task<IActionResult> GetAllOrdersbyMonthAsync(int month, int year)
         {
             try
             {
-                var result = await _orderService.AllOrdersbyMonthServiceAsync(month, year);
+                var result = await _orderService.GetAllOrdersbyMonthServiceAsync(month, year);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -51,11 +54,11 @@ namespace server.Controllers
         }
 
         [HttpGet("Email/{email}")]
-        public async Task<IActionResult> Get(string email)
+        public async Task<IActionResult> GetAllOrdersbyEmailAsync(string email)
         {
             try
             {
-                var result = await _orderService.AllOrdersbyEmailServiceAsync(email);
+                var result = await _orderService.GetAllOrdersbyEmailServiceAsync(email);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -65,11 +68,11 @@ namespace server.Controllers
         }
 
         [HttpGet("{orderId}")]
-        public async Task<IActionResult> Get(int orderId)
+        public async Task<IActionResult> GetOrderDetailsAsync(int orderId)
         {
             try
             {
-                var result = await _orderService.OrderDetailsServiceAsync(orderId);
+                var result = await _orderService.GetOrderDetailsServiceAsync(orderId);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -79,7 +82,7 @@ namespace server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] OrderDto order)
+        public async Task<IActionResult> PoPlaceOrderAsyncst([FromBody] OrderDto order)
         {
             try
             {

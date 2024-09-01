@@ -15,7 +15,7 @@ namespace server.Services
             _orderRepo = orderRepo;
         }
 
-        public async Task<List<OrderReturnDto>> AllOrdersServiceAsync()
+        public async Task<List<OrderReturnDto>> GetAllOrdersServiceAsync()
         {
             var result = await _orderRepo.GetAllOrdersAsync();
           
@@ -30,7 +30,7 @@ namespace server.Services
 
             return orderDtos;
         }
-        public async Task<List<OrderReturnDto>> AllOrdersbyMonthServiceAsync(int month,int year)
+        public async Task<List<OrderReturnDto>> GetAllOrdersbyMonthServiceAsync(int month,int year)
         {
             var result = await _orderRepo.GetAllOrdersbyMonthAsync(month,year);
             var orderDtos = result.Select(order => new OrderReturnDto
@@ -45,7 +45,7 @@ namespace server.Services
             return orderDtos;
 
         }
-        public async Task<List<OrderReturnDto>> AllOrdersbyEmailServiceAsync(string email)
+        public async Task<List<OrderReturnDto>> GetAllOrdersbyEmailServiceAsync(string email)
         {
             var result = await _orderRepo.GetAllOrdersbyEmailAsync(email);
             var orderDtos = result.Select(order => new OrderReturnDto
@@ -60,7 +60,7 @@ namespace server.Services
             return orderDtos;
         }
 
-        public async Task<List<OrderItemDto>> OrderDetailsServiceAsync(int OrderId)
+        public async Task<List<OrderItemDto>> GetOrderDetailsServiceAsync(int OrderId)
         {
             var result = await _orderRepo.GetOrderDetailsAsync(OrderId);
             var orderItemDtos = result.Select(orderItem => new OrderItemDto
