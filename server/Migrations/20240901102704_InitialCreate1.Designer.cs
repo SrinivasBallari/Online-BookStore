@@ -12,8 +12,8 @@ using server.Models.DB;
 namespace server.Migrations
 {
     [DbContext(typeof(BookStoreDbContext))]
-    [Migration("20240901040130_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240901102704_InitialCreate1")]
+    partial class InitialCreate1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -413,12 +413,14 @@ namespace server.Migrations
                     b.HasOne("server.Models.DB.Book", null)
                         .WithMany()
                         .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK__BookTag__book_id__440B1D61");
 
                     b.HasOne("server.Models.DB.Tag", null)
                         .WithMany()
                         .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK__BookTag__tag_id__44FF419A");
                 });
