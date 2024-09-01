@@ -7,6 +7,9 @@ using server.Models.DB;
 using server.Policies;
 using server.Services;
 using server.Repositories;
+using System;
+using System.Text.Json.Serialization;
+
 
 namespace OnlineBookStore
 {
@@ -28,8 +31,13 @@ namespace OnlineBookStore
                                .AllowAnyMethod();
                     });
             });
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+           
+
+            builder.Services.AddControllers()
+               .AddJsonOptions(options =>
+               {
+                   options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+               });
 
             var audience = builder.Configuration.GetValue<string>("Audience");
             var issuer = builder.Configuration.GetValue<string>("Issuer");
@@ -89,15 +97,16 @@ namespace OnlineBookStore
             });
             builder.Services.AddTransient(typeof(IAuthService), typeof(AuthService));
             builder.Services.AddTransient(typeof(IAuthRepo), typeof(AuthRepo));
-            builder.Services.AddTransient(typeof(IPasswordHasher<User>), typeof(PasswordHasher<User>));
-            builder.Services.AddTransient(typeof(ITokenGenerator), typeof(JwtTokenGenerator));
-            builder.Services.AddTransient(typeof(IBookRepo), typeof(BookRepo));
-            builder.Services.AddTransient(typeof(IBookService), typeof(BookService));
+            builder.Services.AddTransient(typeof(IOrderRepo), typeof(OrderRepo));
+            builder.Services.AddTransient(typeof(IPasswordHasher<User>),typeof(PasswordHasher<User>));
+            builder.Services.AddTransient(typeof(ITokenGenerator),typeof(JwtTokenGenerator));
+            builder.Services.AddTransient(typeof(IOrderService), typeof(OrderService));
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             builder.Logging.ClearProviders();
-            builder.Logging.AddLog4Net();
+            
 
 
             var app = builder.Build();
