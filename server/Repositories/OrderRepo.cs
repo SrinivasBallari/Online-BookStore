@@ -38,7 +38,7 @@ namespace server.Repositories
             return await _context.OrderItems.Where(o => o.OrderId == OrderId).ToListAsync();
         }
 
-        public async Task<Order> PlaceOrderAsync(OrderDto order)
+        public async Task<Order> PlaceOrderAsync(OrderDto order,string userEmail)
         {
             var paymentResult = _context.Payments.Add(new Payment
             {
@@ -48,10 +48,11 @@ namespace server.Repositories
             });
 
             await _context.SaveChangesAsync();
-
+            var user = _context.Users.Where(u => u.Email == userEmail).FirstOrDefault();
+            
             var OrderResult =  _context.Orders.Add(new Order
             {
-                UserId = order.UserId,
+                UserId = user.UserId,
                 PaymentId = paymentResult.Entity.PaymentId,
                 Total = order.Total,
                 OrderDate = DateOnly.FromDateTime(DateTime.Now)

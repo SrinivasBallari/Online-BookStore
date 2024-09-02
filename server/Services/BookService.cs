@@ -24,24 +24,24 @@ namespace server.Services{
     }
 
     public async Task<IEnumerable<BookDTO>> GetAllBooksAsync()
-{
-    var books = await _bookRepo.GetAllBooksAsync();
-    return books.Select(book => ConvertToBookDTO(book)).ToList();
-}
+    {
+        var books = await _bookRepo.GetAllBooksAsync();
+        return books.Select(book => ConvertToBookDTO(book)).ToList();
+    }
 
 
     public async Task<BookDTO> GetBookByIdAsync(int bookId)
-{
-    var book = await _bookRepo.GetBookByIdAsync(bookId);
-    return book != null ? ConvertToBookDTO(book) : null;
-}
+    {
+        var book = await _bookRepo.GetBookByIdAsync(bookId);
+        return book != null ? ConvertToBookDTO(book) : null;
+    }
 
 
-   public async Task<IEnumerable<BookDTO>> SearchBooksAsync(string searchString)
-{
-    var books = await _bookRepo.SearchBooksAsync(searchString);
-    return books.Select(book => ConvertToBookDTO(book)).ToList();
-}
+    public async Task<IEnumerable<BookDTO>> SearchBooksAsync(string searchString)
+    {
+        var books = await _bookRepo.SearchBooksAsync(searchString);
+        return books.Select(book => ConvertToBookDTO(book)).ToList();
+    }
 
 
     public async Task<IEnumerable<Tag>> GetAllCategoriesAsync()
@@ -49,20 +49,20 @@ namespace server.Services{
         return await _tagRepo.GetAllTagsAsync();
     }
 
-   public async Task<IEnumerable<BookDTO>> GetBooksByCategoryAsync(int tagId)
-{
-    var books = await _tagRepo.GetBooksByTagIdAsync(tagId);
-    return books.Select(book => ConvertToBookDTO(book)).ToList();
-}
+    public async Task<IEnumerable<BookDTO>> GetBooksByCategoryAsync(int tagId)
+    {
+        var books = await _tagRepo.GetBooksByTagIdAsync(tagId);
+        return books.Select(book => ConvertToBookDTO(book)).ToList();
+    }
 
    public async Task<IEnumerable<BookDTO>> GetSimilarBooksAsync(int bookId)
-{
-    var book = await _bookRepo.GetBookByIdAsync(bookId);
-    if (book == null) return Enumerable.Empty<BookDTO>();
+    {
+        var book = await _bookRepo.GetBookByIdAsync(bookId);
+        if (book == null) return Enumerable.Empty<BookDTO>();
 
-    var similarBooks = await _tagRepo.GetBooksByTagIdAsync(book.Tags.Select(t => t.TagId).FirstOrDefault());
-    return similarBooks.Select(b => ConvertToBookDTO(b)).ToList();
-}
+        var similarBooks = await _tagRepo.GetBooksByTagIdAsync(book.Tags.Select(t => t.TagId).FirstOrDefault());
+        return similarBooks.Select(b => ConvertToBookDTO(b)).ToList();
+    }
 
 
     public async Task<BookResponseDTO> AddBookAsync(BookDTO bookDTO)
@@ -145,35 +145,30 @@ namespace server.Services{
             }
         }
         if (bookDTO.TagNames != null && bookDTO.TagNames.Any())
-{
-    foreach (var tagName in bookDTO.TagNames)
-    {
-        // Check if the tag already exists in the database
-        var existingTag = await _tagRepo.GetByNameAsync(tagName);
-
-        Tag tag;
-        if (existingTag != null)
         {
-            // Use the existing tag
-            tag = existingTag;
-        }
-        else
-        {
-            // Create a new tag if it doesn't exist
-            tag = new Tag { Tag1 = tagName };
-            await _tagRepo.AddAsync(tag);
-        }
+            foreach (var tagName in bookDTO.TagNames)
+            {
+                var existingTag = await _tagRepo.GetByNameAsync(tagName);
 
-        // Add the tag (either existing or new) to the book's Tags collection
-        book.Tags.Add(tag);
-    }
-}
+                Tag tag;
+                if (existingTag != null)
+                {
+                    tag = existingTag;
+                }
+                else
+                {
+                    tag = new Tag { Tag1 = tagName };
+                    await _tagRepo.AddAsync(tag);
+                }
 
+                book.Tags.Add(tag);
+            }
+        }
 
         return book;
     }
 
-     public async Task<IEnumerable<AuthorDTO>> GetAllAuthorsAsync()
+    public async Task<IEnumerable<AuthorDTO>> GetAllAuthorsAsync()
     {
         var authors = await _authorRepo.GetAllAuthorsAsync();
         return authors.Select(author => new AuthorDTO

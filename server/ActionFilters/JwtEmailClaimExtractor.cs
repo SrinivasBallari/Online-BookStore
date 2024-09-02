@@ -6,9 +6,8 @@ using System.Security.Claims;
 
 namespace server.ActionFilters
 {
-    public class TokenValidationFilter : ActionFilterAttribute
+    public class JwtEmailClaimExtractorFilter : ActionFilterAttribute
     {
-        private readonly BookStoreDbContext _context = new BookStoreDbContext();
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
@@ -22,17 +21,11 @@ namespace server.ActionFilters
                     var emailClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Email)?.Value;
                     if (emailClaim != null)
                     {
-                        // Check if a user with this Email and Role exists in the database
-                        var userExists = _context.Users.Any(u => u.Email == emailClaim);
-
-                        if (userExists)
-                        {
-                            // Set the user identity and continue the request
-                            var claimsIdentity = new ClaimsIdentity(jwtToken.Claims, "jwt");
-                            context.HttpContext.User = new ClaimsPrincipal(claimsIdentity);
-                            base.OnActionExecuting(context);
-                            return;
-                        }
+                        // Set the user identity and continue the request
+                        var claimsIdentity = new ClaimsIdentity(jwtToken.Claims, "jwt");
+                        context.HttpContext.Items["userEmail"] = emailClaim;
+                        base.OnActionExecuting(context);
+                        return;
                     }
                 }
             }
