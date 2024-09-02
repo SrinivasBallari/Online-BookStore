@@ -5,7 +5,6 @@ namespace server.DTO
 {
     public class OrderDto
     {
-        public int UserId { get; set; }
         public string? PaymentType {  get; set; }
         public int? Total { get; set; }
         public List<OrderItemInputDto> OrderedItems { get; set; }

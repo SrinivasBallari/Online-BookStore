@@ -20,6 +20,10 @@ namespace server.Controllers
             _authService = authService;
         }
 
+        /// <summary>
+        /// Register's a new user
+        /// </summary>
+        /// <returns>a jwt-token that is to be stored on the client .</returns>
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserRegistrationDto userDto)
         {
@@ -35,6 +39,10 @@ namespace server.Controllers
 
         }
 
+        /// <summary>
+        /// Verify user login details and provide a jwt token upon successfull authentication.
+        /// </summary>
+        /// <returns>a jwt-token that is to be stored on the client.</returns>
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginDto loginDto)
         {

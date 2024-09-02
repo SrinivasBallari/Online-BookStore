@@ -74,9 +74,9 @@ namespace server.Services
             return orderItemDtos;
         }
 
-        public async Task<Order> PlaceOrderServiceAsync(OrderDto order)
+        public async Task<Order> PlaceOrderServiceAsync(OrderDto order,string userEmail)
         {
-            var result = await _orderRepo.PlaceOrderAsync(order);
+            var result = await _orderRepo.PlaceOrderAsync(order,userEmail);
 
             return result;
         }
