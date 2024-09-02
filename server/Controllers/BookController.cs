@@ -31,8 +31,15 @@ namespace server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BookDTO>>> GetAllBooks()
         {
-            var books = await _bookService.GetAllBooksAsync();
-            return Ok(books);
+            try
+            {
+                var books = await _bookService.GetAllBooksAsync();
+                return Ok(books);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -44,12 +51,19 @@ namespace server.Controllers
         [HttpGet("{bookId}")]
         public async Task<ActionResult<BookDTO>> GetBookById(int bookId)
         {
-            var book = await _bookService.GetBookByIdAsync(bookId);
-            if (book == null)
+            try
             {
-                return NotFound("Book not found.");
+                var book = await _bookService.GetBookByIdAsync(bookId);
+                if (book == null)
+                {
+                    return NotFound("Book not found.");
+                }
+                return Ok(book);
             }
-            return Ok(book);
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -61,8 +75,15 @@ namespace server.Controllers
         [HttpGet("search/{searchString}")]
         public async Task<ActionResult<IEnumerable<BookDTO>>> SearchBooks(string searchString)
         {
-            var books = await _bookService.SearchBooksAsync(searchString);
-            return Ok(books);
+            try
+            {
+                var books = await _bookService.SearchBooksAsync(searchString);
+                return Ok(books);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -75,8 +96,15 @@ namespace server.Controllers
         [SwaggerResponse(200, "Returns a list of categories", typeof(IEnumerable<Tag>))]
         public async Task<ActionResult<IEnumerable<Tag>>> GetAllCategories()
         {
-            var categories = await _bookService.GetAllCategoriesAsync();
-            return Ok(categories);
+            try
+            {
+                var categories = await _bookService.GetAllCategoriesAsync();
+                return Ok(categories);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -90,8 +118,15 @@ namespace server.Controllers
         [SwaggerResponse(200, "Returns a list of books in the specified category", typeof(IEnumerable<BookDTO>))]
         public async Task<ActionResult<IEnumerable<BookDTO>>> GetBooksByCategory(int tagId)
         {
-            var books = await _bookService.GetBooksByCategoryAsync(tagId);
-            return Ok(books);
+            try
+            {
+                var books = await _bookService.GetBooksByCategoryAsync(tagId);
+                return Ok(books);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -105,8 +140,15 @@ namespace server.Controllers
         [SwaggerResponse(200, "Returns a list of similar books", typeof(IEnumerable<BookDTO>))]
         public async Task<ActionResult<IEnumerable<BookDTO>>> GetSimilarBooks(int bookId)
         {
-            var books = await _bookService.GetSimilarBooksAsync(bookId);
-            return Ok(books);
+             try
+            {
+                var books = await _bookService.GetSimilarBooksAsync(bookId);
+                return Ok(books);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -153,12 +195,19 @@ namespace server.Controllers
         // [SwaggerResponse(400, "Invalid input")]
         public async Task<ActionResult<BookResponseDTO>> AddBook([FromBody] BookDTO bookDTO)
         {
-            var response = await _bookService.AddBookAsync(bookDTO);
-            if (response.Success)
+             try
             {
-                return CreatedAtAction(nameof(GetBookById), new { bookId = response.BookId }, response);
+                var response = await _bookService.AddBookAsync(bookDTO);
+                if (response.Success)
+                {
+                    return CreatedAtAction(nameof(GetBookById), new { bookId = response.BookId }, response);
+                }
+                return BadRequest(response);
             }
-            return BadRequest(response);
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -173,12 +222,20 @@ namespace server.Controllers
         [SwaggerResponse(404, "Book not found")]
         public async Task<IActionResult> DeleteBook(int bookId)
         {
-            var success = await _bookService.DeleteBookAsync(bookId);
-            if (success)
+            try
             {
-                return NoContent();
+                var success = await _bookService.DeleteBookAsync(bookId);
+                if (success)
+                {
+                    return NoContent();
+                }
+                return NotFound("Book not found.");
             }
-            return NotFound("Book not found.");
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+            
         }
 
         /// <summary>
@@ -191,8 +248,15 @@ namespace server.Controllers
         [SwaggerResponse(200, "Returns a list of authors", typeof(IEnumerable<AuthorDTO>))]
         public async Task<ActionResult<IEnumerable<AuthorDTO>>> GetAllAuthors()
         {
-            var authors = await _bookService.GetAllAuthorsAsync();
-            return Ok(authors);
+            try
+            {
+                var authors = await _bookService.GetAllAuthorsAsync();
+                return Ok(authors);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -204,9 +268,16 @@ namespace server.Controllers
         [SwaggerOperation(Summary = "Retrieves all publishers", Description = "Gets a list of all publishers in the system.")]
         [SwaggerResponse(200, "Returns a list of publishers", typeof(IEnumerable<PublisherDTO>))]
         public async Task<ActionResult<IEnumerable<PublisherDTO>>> GetAllPublishers()
-        {
-            var publishers = await _bookService.GetAllPublishersAsync();
-            return Ok(publishers);
+        {   
+            try
+             {
+                var publishers = await _bookService.GetAllPublishersAsync();
+                return Ok(publishers);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
     }
 }

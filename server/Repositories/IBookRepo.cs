@@ -14,6 +14,7 @@ public interface IBookRepo
     Task<IEnumerable<Book>> SearchBooksAsync(string searchString);
     Task AddBookAsync(Book book);
     Task<bool> DeleteBookAsync(int bookId);
+    Task<Book?> GetBookByAttributesAsync(string title, int? authorId, int? publisherId, DateOnly? publishedDate);
 }
 
 

@@ -66,12 +66,25 @@ namespace server.Services{
 
 
     public async Task<BookResponseDTO> AddBookAsync(BookDTO bookDTO)
-    {
-        var book = await BuildBookEntityAsync(bookDTO);
+{
+   
+    var existingBook = await _bookRepo.GetBookByAttributesAsync(
+        bookDTO.Title,
+        bookDTO.AuthorId,
+        bookDTO.PublisherId,
+        bookDTO.PublishedDate
+    );
 
-        await _bookRepo.AddBookAsync(book);
-        return new BookResponseDTO { Success = true, BookId = book.BookId };
+    if (existingBook != null)
+    {
+        throw new Exception("A book with the same title, author, publisher, and published date already exists.");
     }
+
+   
+    var book = await BuildBookEntityAsync(bookDTO);
+    await _bookRepo.AddBookAsync(book);
+    return new BookResponseDTO { Success = true, BookId = book.BookId };
+}
 
     public async Task<BookResponseDTO> UpdateBookAsync(int bookId, BookDTO bookDTO)
     {
