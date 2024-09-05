@@ -19,7 +19,13 @@ namespace server.Services.UserService
 
         public async Task<bool> updateUserAsync(string email, bool? isAdmin, UserDTO? userDTO)
         {
-            int userId = (await _userRepo.FetchUserByEmail(email)).UserId;
+            var userFromRepo = await _userRepo.FetchUserByEmail(email);
+           
+            if (userFromRepo == null)
+    {
+        throw new Exception($"User not found with the given email. {email}");
+    }
+         int userId = userFromRepo.UserId;
             var user = new User{
                 UserId = userId,
                 Name = userDTO.Name,

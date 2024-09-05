@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using server.ActionFilters;
 using server.DTO;
 using server.Models.DB;
 using server.Policies;
@@ -24,9 +25,9 @@ namespace server.Controllers
         }
 
        [HttpPost]
-
-        [Authorize(Policy = SecurityPolicy.Customer)]
-        [Authorize(Policy = SecurityPolicy.Admin)]
+        [JwtEmailClaimExtractorFilter]
+        [Authorize(Roles =  "customer,admin")]
+       
 public async Task<IActionResult> updateUserDetailsAsync([FromBody] UserDTO userDTO)
 {
     try

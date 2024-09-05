@@ -12,8 +12,8 @@ using server.Models.DB;
 namespace server.Migrations
 {
     [DbContext(typeof(BookStoreDbContext))]
-    [Migration("20240905094631_IntialChange")]
-    partial class IntialChange
+    [Migration("20240905134758_IntialCreate")]
+    partial class IntialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
