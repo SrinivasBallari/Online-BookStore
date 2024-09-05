@@ -1,10 +1,12 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using server.DTO;
 using server.Models.DB;
+using server.Policies;
 using server.Services;
 using server.Services.UserService;
 
@@ -22,6 +24,9 @@ namespace server.Controllers
         }
 
        [HttpPost]
+
+        [Authorize(Policy = SecurityPolicy.Customer)]
+        [Authorize(Policy = SecurityPolicy.Admin)]
 public async Task<IActionResult> updateUserDetailsAsync([FromBody] UserDTO userDTO)
 {
     try

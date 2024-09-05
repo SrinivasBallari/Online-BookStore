@@ -45,7 +45,10 @@ namespace server.Services
             var user = new User
             {
                 Name = userDto.Name,
-                Email = userDto.Email
+                Email = userDto.Email,
+                Contact = userDto.Contact,
+                Address = userDto.Address,
+                PinCode = userDto.PinCode
             };
 
             user.Password = _passwordHasher.HashPassword(user, userDto.Password);
