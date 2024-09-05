@@ -1,5 +1,5 @@
 .books-section {
-  padding: 15px;
+  max-width: 100%;
 }
 
 .card {
@@ -7,7 +7,7 @@
 }
 
 .pagination {
-  justify-content: center;
+  justify-content: space-between;
 }
 
 @media (max-width: 768px) {
