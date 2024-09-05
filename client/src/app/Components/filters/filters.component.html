@@ -1,0 +1,59 @@
+<div class="filters-section">
+  <h4>Filters</h4>
+
+  <!-- Grid layout for larger screens -->
+  <div class="container d-md-grid">
+    <div class="row g-5">
+
+      <div class="">
+        <h5>Genres</h5>
+        <div *ngFor="let genre of genres" class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [id]="genre"
+            (change)="onCheckboxChange('genre', genre, $event)"
+          />
+          <label class="form-check-label" [for]="genre">{{ genre }}</label>
+        </div>
+      </div>
+
+      <div class="">
+        <h5>Languages</h5>
+        <div *ngFor="let language of languages" class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [id]="language"
+            (change)="onCheckboxChange('language', language, $event)"
+          />
+          <label class="form-check-label" [for]="language">{{ language }}</label>
+        </div>
+      </div>
+
+      </div>
+      <div class="row">
+
+      <div class="">
+        <h5>Price Range</h5>
+        <select class="form-select" (change)="onPriceRangeChange($event)">
+          <option value="">Select</option>
+          <option *ngFor="let range of priceRanges" [value]="range">{{ range }}</option>
+        </select>
+      </div>
+
+      <div class="gy-5">
+        <h5>Authors</h5>
+        <div *ngFor="let author of authors" class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [id]="author"
+            (change)="onCheckboxChange('author', author, $event)"
+          />
+          <label class="form-check-label" [for]="author">{{ author }}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

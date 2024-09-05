@@ -1,0 +1,72 @@
+<div class="container mt-4">
+    <!-- Book Details Section -->
+    <div class="row mb-4">
+      <div class="col-md-6 mb-4 mb-md-0">
+        <img [src]="book.imageUrl" class="img-fluid rounded" alt="{{ book.title }}" />
+      </div>
+      <div class="col-md-6">
+        <h2 class="mb-2">{{ book.title }}</h2>
+        <h4 class="mb-3">{{ book.author.name }}</h4>
+        <p class="text-muted mb-3">{{ book.author.bio }}</p>
+        <p class="text-muted mb-3">Publisher: {{ book.publisher }}</p>
+        <p class="text-muted mb-3">Published Date: {{ book.publishedDate | date }}</p>
+        <p class="text-muted mb-3">Pages: {{ book.pagesCount }}</p>
+        <p class="text-muted mb-3">Price: ${{ book.price }}</p>
+        <p class="text-muted mb-3">Average Rating: {{ averageRating }} / 5</p>
+        <div class="mb-3">
+          <h5>Tags:</h5>
+          <span *ngFor="let tag of book.tags" class="badge bg-secondary me-1 mb-1">{{ tag }}</span>
+        </div>
+        <div class="d-flex align-items-center mb-4">
+          <button class="btn btn-primary me-2" (click)="decreaseQuantity()">-</button>
+          <span class="fs-4 me-2">{{ quantity }}</span>
+          <button class="btn btn-primary me-2" (click)="increaseQuantity()">+</button>
+          <button class="btn btn-success" (click)="addToCart()">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Book Description Section -->
+    <div class="mb-4">
+      <h3 class="mb-3">Book Description</h3>
+      <p>{{ book.description }}</p>
+    </div>
+  
+    <!-- Similar Books Section -->
+    <div class="mb-4">
+      <h3 class="mb-3">Similar Books</h3>
+      <div class="row">
+        <div *ngFor="let similarBook of similarBooks" class="col-md-4 mb-4">
+          <div class="card">
+            <img [src]="similarBook.imageUrl" class="card-img-top" alt="{{ similarBook.title }}" />
+            <div class="card-body text-center">
+              <h5 class="card-title">{{ similarBook.title }}</h5>
+              <p class="card-text">Price: ${{ similarBook.price }}</p>
+              <a [routerLink]="['/book', similarBook.id]" class="btn btn-primary">View Details</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Ratings and Reviews Section -->
+    <div>
+      <h3 class="mb-3">Ratings & Reviews</h3>
+      <div *ngIf="ratings.length; else noRatings" class="mb-4">
+        <div *ngFor="let rating of ratings" class="d-flex align-items-start mb-4">
+          <div class="me-3">
+            <img [src]="rating.userImage" class="rounded-circle" width="50" height="50" alt="User Image" />
+          </div>
+          <div>
+            <h5 class="mb-1">{{ rating.username }}</h5>
+            <p class="mb-1">Rating: {{ rating.rating }} / 5</p>
+            <p>{{ rating.comment }}</p>
+          </div>
+        </div>
+      </div>
+      <ng-template #noRatings>
+        <p>No reviews yet.</p>
+      </ng-template>
+    </div>
+  </div>
+  
