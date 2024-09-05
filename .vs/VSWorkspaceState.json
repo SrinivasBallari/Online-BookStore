@@ -1,8 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\server"
+    "\\server",
+    "\\server\\Models\\DB",
+    "\\server\\Repositories",
+    "\\server\\Services"
   ],
-  "SelectedNode": "\\server\\Controllers",
+  "SelectedNode": "\\server\\.gitignore",
   "PreviewInSolutionExplorer": false
 }

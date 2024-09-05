@@ -8,6 +8,8 @@ using server.Models.DB;
 using server.Services;
 using System;
 using Microsoft.AspNetCore.Authorization;
+using server.Policies;
+using server.ActionFilters;
 
 namespace server.Controllers
 {
@@ -22,8 +24,12 @@ namespace server.Controllers
             _orderService = orderService;
         }
 
+        /// <summary>
+        /// Retrieves all order's. 
+        /// </summary>
+        /// <returns>A list of Orders.</returns>
         [HttpGet]
-        [Authorize(Roles = "customer")]
+        [Authorize(Policy = SecurityPolicy.Admin)]
         public async Task<IActionResult> GetAllOrdersAsync()
         {
             try
@@ -38,8 +44,12 @@ namespace server.Controllers
 
         }
 
+        /// <summary>
+        /// Retrieves Orders by Date
+        /// </summary>
+        /// <returns>List of orders based on provided date.</returns>
         [HttpGet("monthly/{month}/{year}")]
-        
+        [Authorize(Policy = SecurityPolicy.Admin)]
         public async Task<IActionResult> GetAllOrdersbyMonthAsync(int month, int year)
         {
             try
@@ -53,7 +63,12 @@ namespace server.Controllers
             }
         }
 
+        /// <summary>
+        /// Retrieves all orders by email
+        /// </summary>
+        /// <returns>A List of orders based on provided email</returns>
         [HttpGet("Email/{email}")]
+        [Authorize(Policy = SecurityPolicy.Admin)]
         public async Task<IActionResult> GetAllOrdersbyEmailAsync(string email)
         {
             try
@@ -67,7 +82,12 @@ namespace server.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets Order Details based on order ID
+        /// </summary>
+        /// <returns>Order details of a specific order</returns>
         [HttpGet("{orderId}")]
+        [Authorize(Policy = SecurityPolicy.Admin)]
         public async Task<IActionResult> GetOrderDetailsAsync(int orderId)
         {
             try
@@ -81,13 +101,18 @@ namespace server.Controllers
             }
         }
 
+        /// <summary>
+        /// places an order for a customer
+        /// </summary>
         [HttpPost]
-        public async Task<IActionResult> PoPlaceOrderAsyncst([FromBody] OrderDto order)
+        [JwtEmailClaimExtractorFilter]
+        [Authorize(Policy = SecurityPolicy.Customer)]
+        public async Task<IActionResult> PlaceOrderAsync([FromBody] OrderDto order)
         {
             try
             {
-                var result = await _orderService.PlaceOrderServiceAsync(order);
-                
+                string userEmail = HttpContext.Items["userEmail"] as string;
+                var result = await _orderService.PlaceOrderServiceAsync(order,userEmail);
                 return Ok(result);
             }
             catch (Exception ex)

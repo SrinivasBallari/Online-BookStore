@@ -7,9 +7,8 @@ using server.Models.DB;
 using server.Policies;
 using server.Services;
 using server.Repositories;
-using System;
 using System.Text.Json.Serialization;
-
+using Microsoft.OpenApi.Models;
 
 namespace OnlineBookStore
 {
@@ -20,24 +19,27 @@ namespace OnlineBookStore
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+
+            builder.Services.AddControllers();
+            var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowLocalhost4200",
                     builder =>
                     {
                         builder.AllowAnyOrigin()
-                               .AllowAnyHeader()
-                               .AllowAnyMethod();
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
                     });
             });
-           
-
             builder.Services.AddControllers()
-               .AddJsonOptions(options =>
-               {
-                   options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-               });
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+            });
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
             var audience = builder.Configuration.GetValue<string>("Audience");
             var issuer = builder.Configuration.GetValue<string>("Issuer");
@@ -97,16 +99,31 @@ namespace OnlineBookStore
             });
             builder.Services.AddTransient(typeof(IAuthService), typeof(AuthService));
             builder.Services.AddTransient(typeof(IAuthRepo), typeof(AuthRepo));
-            builder.Services.AddTransient(typeof(IOrderRepo), typeof(OrderRepo));
-            builder.Services.AddTransient(typeof(IPasswordHasher<User>),typeof(PasswordHasher<User>));
-            builder.Services.AddTransient(typeof(ITokenGenerator),typeof(JwtTokenGenerator));
+            builder.Services.AddTransient(typeof(IBookRepo), typeof(BookRepo));
+            builder.Services.AddTransient(typeof(IBookService), typeof(BookService));
+            builder.Services.AddTransient(typeof(IAuthorRepo), typeof(AuthorRepo));
             builder.Services.AddTransient(typeof(IOrderService), typeof(OrderService));
-
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
-            builder.Logging.ClearProviders();
+            builder.Services.AddTransient(typeof(IPublisherRepo), typeof(PublisherRepo));
+            builder.Services.AddTransient(typeof(ITagRepo), typeof(TagRepo));
+            builder.Services.AddTransient(typeof(IOrderRepo), typeof(OrderRepo));
+            builder.Services.AddTransient(typeof(IPasswordHasher<User>), typeof(PasswordHasher<User>));
+            builder.Services.AddTransient(typeof(ITokenGenerator), typeof(JwtTokenGenerator));
             
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "BookStore API",
+                    Version = "v1",
+                    Description = "API documentation for the BookStore"
+                });
+                c.IncludeXmlComments(xmlPath);
+                c.EnableAnnotations();
+            });
+
+                builder.Logging.ClearProviders();
+            builder.Logging.AddLog4Net();
 
 
             var app = builder.Build();
