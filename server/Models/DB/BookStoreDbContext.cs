@@ -21,9 +21,13 @@ public partial class BookStoreDbContext : DbContext
 
     public virtual DbSet<Cart> Carts { get; set; }
 
+    // public virtual DbSet<CartItem> { get; set;}
+    public virtual DbSet<CartItem> CartIterms { get; set; }
     public virtual DbSet<Order> Orders { get; set; }
 
     public virtual DbSet<OrderItem> OrderItems { get; set; }
+
+
 
     public virtual DbSet<Payment> Payments { get; set; }
 
@@ -33,7 +37,10 @@ public partial class BookStoreDbContext : DbContext
 
     public virtual DbSet<Tag> Tags { get; set; }
 
+   
     public virtual DbSet<User> Users { get; set; }
+
+   
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -112,23 +119,45 @@ public partial class BookStoreDbContext : DbContext
                         });
             });
 
-        modelBuilder.Entity<Cart>(entity =>
-        {
-            entity.HasKey(e => e.CartId).HasName("PK__Carts__2EF52A27B9CE3939");
+       modelBuilder.Entity<Cart>(entity =>
+{
+    entity.HasKey(e => e.CartId).HasName("PK__Carts__2EF52A27B9CE3939");
 
-            entity.Property(e => e.CartId).HasColumnName("cart_id");
-            entity.Property(e => e.BookId).HasColumnName("book_id");
-            entity.Property(e => e.Quantity).HasColumnName("quantity");
-            entity.Property(e => e.UserId).HasColumnName("user_id");
+    entity.Property(e => e.CartId).HasColumnName("cart_id");
+   
+    entity.Property(e => e.UserId).HasColumnName("user_id");
 
-            entity.HasOne(d => d.Book).WithMany(p => p.Carts)
-                .HasForeignKey(d => d.BookId)
-                .HasConstraintName("FK__Carts__book_id__534D60F1");
+ 
 
-            entity.HasOne(d => d.User).WithMany(p => p.Carts)
-                .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__Carts__user_id__5441852A");
-        });
+    entity.HasOne(d => d.User).WithMany(p => p.Carts)
+        .HasForeignKey(d => d.UserId)
+        .HasConstraintName("FK__Carts__user_id__5441852A");
+
+    entity.HasMany(d => d.CartItems).WithOne(p => p.Cart)
+        .HasForeignKey(d => d.CartId)
+        .HasConstraintName("FK__CartItems__cart_id__12345678");
+});
+
+
+        modelBuilder.Entity<CartItem>(entity =>
+{
+    entity.HasKey(e => e.CartItemId).HasName("PK__CartItems__12345678");
+
+    entity.Property(e => e.CartItemId).HasColumnName("cart_item_id");
+    entity.Property(e => e.CartId).HasColumnName("cart_id");
+    entity.Property(e => e.BookId).HasColumnName("book_id");
+    entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+    entity.HasOne(d => d.Book).WithMany(p => p.CartItems)
+        .HasForeignKey(d => d.BookId)
+        .HasConstraintName("FK__CartItems__book_id__12345678");
+
+    entity.HasOne(d => d.Cart).WithMany(p => p.CartItems)
+        .HasForeignKey(d => d.CartId)
+        .HasConstraintName("FK__CartItems__cart_id__12345678");
+});
+
+
 
         modelBuilder.Entity<Order>(entity =>
         {
