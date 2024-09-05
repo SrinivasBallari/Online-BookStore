@@ -1,22 +1,62 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\admin\\Desktop\\proj\\Online-BookStore\\",
+  "WorkspaceRootPath": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\admin\\Desktop\\proj\\Online-BookStore\\server\\Controllers\\BookController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\Controllers\\BookController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Controllers\\OrderController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\Controllers\\OrderController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\admin\\Desktop\\proj\\Online-BookStore\\server\\ActionFilters\\TokenValidation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\ActionFilters\\TokenValidation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Services\\OrderService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\Services\\OrderService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\admin\\Desktop\\proj\\Online-BookStore\\server\\Repositories\\BookRepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Services\\IOrderService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\Services\\IOrderService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Repositories\\IOrderRepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\Repositories\\IOrderRepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Repositories\\BookRepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\Repositories\\BookRepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\admin\\Desktop\\proj\\Online-BookStore\\server\\Services\\TokenGenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Repositories\\IAuthRepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\Repositories\\IAuthRepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Repositories\\IBookRepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\Repositories\\IBookRepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Policies\\SecurityPolicy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\Policies\\SecurityPolicy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\appsettings.Development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\appsettings.Development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Services\\TokenGenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\Services\\TokenGenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Services\\AuthService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\Services\\AuthService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Controllers\\AuthController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\Controllers\\AuthController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,62 +66,188 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "BookRepo.cs",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\proj\\Online-BookStore\\server\\Repositories\\BookRepo.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Repositories\\BookRepo.cs",
               "RelativeDocumentMoniker": "server\\Repositories\\BookRepo.cs",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\proj\\Online-BookStore\\server\\Repositories\\BookRepo.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Repositories\\BookRepo.cs",
               "RelativeToolTip": "server\\Repositories\\BookRepo.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAyAAAA",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-31T14:15:23.483Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "TokenGenerator.cs",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\proj\\Online-BookStore\\server\\Services\\TokenGenerator.cs",
-              "RelativeDocumentMoniker": "server\\Services\\TokenGenerator.cs",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\proj\\Online-BookStore\\server\\Services\\TokenGenerator.cs",
-              "RelativeToolTip": "server\\Services\\TokenGenerator.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-31T14:01:06.975Z",
+              "WhenOpened": "2024-09-01T13:38:02.928Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "TokenValidation.cs",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\proj\\Online-BookStore\\server\\ActionFilters\\TokenValidation.cs",
-              "RelativeDocumentMoniker": "server\\ActionFilters\\TokenValidation.cs",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\proj\\Online-BookStore\\server\\ActionFilters\\TokenValidation.cs",
-              "RelativeToolTip": "server\\ActionFilters\\TokenValidation.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAADUAAAAAAAAA",
+              "Title": "OrderService.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Services\\OrderService.cs",
+              "RelativeDocumentMoniker": "server\\Services\\OrderService.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Services\\OrderService.cs",
+              "RelativeToolTip": "server\\Services\\OrderService.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAEMAAAAzAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-31T13:58:38.258Z",
+              "WhenOpened": "2024-09-01T13:35:53.364Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IOrderRepo.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Repositories\\IOrderRepo.cs",
+              "RelativeDocumentMoniker": "server\\Repositories\\IOrderRepo.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Repositories\\IOrderRepo.cs",
+              "RelativeToolTip": "server\\Repositories\\IOrderRepo.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAsAAAAjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-01T13:37:14.596Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "BookController.cs",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\proj\\Online-BookStore\\server\\Controllers\\BookController.cs",
-              "RelativeDocumentMoniker": "server\\Controllers\\BookController.cs",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\proj\\Online-BookStore\\server\\Controllers\\BookController.cs",
-              "RelativeToolTip": "server\\Controllers\\BookController.cs",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAABcAAAAZAAAA",
+              "Title": "OrderController.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Controllers\\OrderController.cs",
+              "RelativeDocumentMoniker": "server\\Controllers\\OrderController.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Controllers\\OrderController.cs",
+              "RelativeToolTip": "server\\Controllers\\OrderController.cs",
+              "ViewState": "AQIAABsAAAAAAAAAAAAAACQAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-30T06:51:41.247Z",
+              "WhenOpened": "2024-08-30T09:11:13.55Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "IAuthRepo.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Repositories\\IAuthRepo.cs",
+              "RelativeDocumentMoniker": "server\\Repositories\\IAuthRepo.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Repositories\\IAuthRepo.cs",
+              "RelativeToolTip": "server\\Repositories\\IAuthRepo.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-01T13:37:55.971Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IOrderService.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Services\\IOrderService.cs",
+              "RelativeDocumentMoniker": "server\\Services\\IOrderService.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Services\\IOrderService.cs",
+              "RelativeToolTip": "server\\Services\\IOrderService.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAwAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-01T13:35:03.545Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IBookRepo.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Repositories\\IBookRepo.cs",
+              "RelativeDocumentMoniker": "server\\Repositories\\IBookRepo.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Repositories\\IBookRepo.cs",
+              "RelativeToolTip": "server\\Repositories\\IBookRepo.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-01T13:37:49.596Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "SecurityPolicy.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Policies\\SecurityPolicy.cs",
+              "RelativeDocumentMoniker": "server\\Policies\\SecurityPolicy.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Policies\\SecurityPolicy.cs",
+              "RelativeToolTip": "server\\Policies\\SecurityPolicy.cs",
+              "ViewState": "AQIAAAIAAAAAAAAAAAAAAAUAAAAfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-30T09:05:25.04Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Program.cs",
+              "RelativeDocumentMoniker": "server\\Program.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Program.cs",
+              "RelativeToolTip": "server\\Program.cs",
+              "ViewState": "AQIAAGkAAAAAAAAAAAAAAGwAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-30T09:01:48.165Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "server\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "server\\Controllers\\AuthController.cs",
+              "ViewState": "AQIAABwAAAAAAAAAAAAUwDQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-30T09:02:46.103Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\appsettings.json",
+              "RelativeDocumentMoniker": "server\\appsettings.json",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\appsettings.json",
+              "RelativeToolTip": "server\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-08-31T10:26:10.286Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "server\\Services\\AuthService.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Services\\AuthService.cs",
+              "RelativeToolTip": "server\\Services\\AuthService.cs",
+              "ViewState": "AQIAAAQAAAAAAAAAAAAUwCwAAAAfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-30T09:02:59.179Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "TokenGenerator.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Services\\TokenGenerator.cs",
+              "RelativeDocumentMoniker": "server\\Services\\TokenGenerator.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\Services\\TokenGenerator.cs",
+              "RelativeToolTip": "server\\Services\\TokenGenerator.cs",
+              "ViewState": "AQIAACgAAAAAAAAAAAAUwCYAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-30T09:03:12.464Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "server\\appsettings.Development.json",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\FinalProject\\Online-BookStore\\server\\appsettings.Development.json",
+              "RelativeToolTip": "server\\appsettings.Development.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAADAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-08-31T10:36:04.563Z",
               "EditorCaption": ""
             }
           ]
