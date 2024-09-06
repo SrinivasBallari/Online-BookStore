@@ -27,7 +27,6 @@ namespace server.Controllers
         /// Retrieves all books.
         /// </summary>
         /// <returns>A list of all books.</returns>
-        [Authorize(Policy = SecurityPolicy.Customer)]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BookDTO>>> GetAllBooks()
         {
@@ -47,7 +46,6 @@ namespace server.Controllers
         /// </summary>
         /// <param name="bookId">The ID of the book to retrieve.</param>
         /// <returns>The book with the specified ID.</returns>
-        [Authorize(Policy = SecurityPolicy.Customer)]
         [HttpGet("{bookId}")]
         public async Task<ActionResult<BookDTO>> GetBookById(int bookId)
         {
@@ -71,7 +69,6 @@ namespace server.Controllers
         /// </summary>
         /// <param name="searchString">The search string to look for in titles, tags, author names, publisher names, or language.</param>
         /// <returns>A list of books matching the search criteria.</returns>
-        [Authorize(Policy = SecurityPolicy.Customer)]
         [HttpGet("search/{searchString}")]
         public async Task<ActionResult<IEnumerable<BookDTO>>> SearchBooks(string searchString)
         {
@@ -90,7 +87,6 @@ namespace server.Controllers
         /// Retrieves all categories (tags).
         /// </summary>
         /// <returns>A list of all categories (tags).</returns>
-        [Authorize]
         [HttpGet("categories")]
         [SwaggerOperation(Summary = "Retrieves all categories", Description = "Gets a list of all book categories (tags) in the system.")]
         [SwaggerResponse(200, "Returns a list of categories", typeof(IEnumerable<Tag>))]
@@ -112,7 +108,6 @@ namespace server.Controllers
         /// </summary>
         /// <param name="tagId">The ID of the category (tag).</param>
         /// <returns>A list of books in the specified category.</returns>
-        [Authorize(Policy = SecurityPolicy.Customer)]
         [HttpGet("category/{categoryId}")]
         [SwaggerOperation(Summary = "Retrieves books by category", Description = "Gets a list of books that belong to a specific category (tag).")]
         [SwaggerResponse(200, "Returns a list of books in the specified category", typeof(IEnumerable<BookDTO>))]
@@ -134,7 +129,6 @@ namespace server.Controllers
         /// </summary>
         /// <param name="bookId">The ID of the book for which to find similar books.</param>
         /// <returns>A list of books similar to the specified book.</returns>
-        [Authorize(Policy = SecurityPolicy.Customer)]
         [HttpGet("getSimilarBooks/{bookId}")]
         [SwaggerOperation(Summary = "Retrieves similar books", Description = "Gets a list of books similar to the specified book based on category (tag).")]
         [SwaggerResponse(200, "Returns a list of similar books", typeof(IEnumerable<BookDTO>))]
@@ -243,7 +237,6 @@ namespace server.Controllers
         /// </summary>
         /// <returns>A list of authors.</returns>
         [HttpGet("authors")]
-        [Authorize]
         [SwaggerOperation(Summary = "Retrieves all authors", Description = "Gets a list of all authors in the system.")]
         [SwaggerResponse(200, "Returns a list of authors", typeof(IEnumerable<AuthorDTO>))]
         public async Task<ActionResult<IEnumerable<AuthorDTO>>> GetAllAuthors()
@@ -264,7 +257,6 @@ namespace server.Controllers
         /// </summary>
         /// <returns>A list of publishers.</returns>
         [HttpGet("publishers")]
-        [Authorize]
         [SwaggerOperation(Summary = "Retrieves all publishers", Description = "Gets a list of all publishers in the system.")]
         [SwaggerResponse(200, "Returns a list of publishers", typeof(IEnumerable<PublisherDTO>))]
         public async Task<ActionResult<IEnumerable<PublisherDTO>>> GetAllPublishers()

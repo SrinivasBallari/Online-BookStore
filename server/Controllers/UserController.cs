@@ -24,31 +24,30 @@ namespace server.Controllers
            _userService = userService;
         }
 
-       [HttpPost]
+        [HttpPost]
         [JwtEmailClaimExtractorFilter]
         [Authorize(Roles =  "customer,admin")]
-       
-public async Task<IActionResult> updateUserDetailsAsync([FromBody] UserDTO userDTO)
-{
-    try
-    {
-        string userEmail = HttpContext.Items["userEmail"] as string;
-        bool result = await _userService.updateUserAsync(userEmail, userDTO.isAdmin, userDTO);
+        public async Task<IActionResult> updateUserDetailsAsync([FromBody] UserDTO userDTO)
+        {
+            try
+            {
+                string userEmail = HttpContext.Items["userEmail"] as string;
+                bool result = await _userService.updateUserAsync(userEmail, userDTO.isAdmin, userDTO);
 
-        if (result)
-        {
-            return Ok(new { Message = "User details updated successfully." });
+                if (result)
+                {
+                    return Ok(new { Message = "User details updated successfully." });
+                }
+                else
+                {
+                    return BadRequest(new { Message = "Failed to update user details." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "An error occurred while updating user details.", Error = ex.Message });
+            }
         }
-        else
-        {
-            return BadRequest(new { Message = "Failed to update user details." });
-        }
-    }
-    catch (Exception ex)
-    {
-        return StatusCode(500, new { Message = "An error occurred while updating user details.", Error = ex.Message });
-    }
-}
 
 
 
