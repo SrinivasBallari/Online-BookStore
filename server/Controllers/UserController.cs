@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.IdentityModel.Tokens;
 using server.ActionFilters;
 using server.DTO;
@@ -48,6 +49,28 @@ namespace server.Controllers
                 return StatusCode(500, new { Message = "An error occurred while updating user details.", Error = ex.Message });
             }
         }
+
+[HttpGet]
+[JwtEmailClaimExtractorFilter]
+[Authorize(Roles =  "customer,admin")]
+public async Task<IActionResult> GetUserDetails(){
+    try
+    {
+        string userEmail = HttpContext.Items["userEmail"] as string;
+        var result = await _userService.getUserDetails(userEmail);
+        if(result != null){
+            return Ok(result);
+        }else{
+            return BadRequest(new { Message = "Failed to fetch user details." });
+        }
+
+    }
+   catch (Exception ex)
+    {
+        return StatusCode(500, new { Message = "An error occurred while fetching user details.", Error = ex.Message });
+    }
+}
+       
 
 
 

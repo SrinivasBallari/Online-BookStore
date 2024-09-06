@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using server.Models.DB;
 
@@ -8,10 +9,12 @@ namespace server.Repositories.UserRepo{
     public class UserRepo : IUserRepo
     {
          private readonly BookStoreDbContext _context;
+          private readonly IPasswordHasher<User> _passwordHasher;
 
-        public UserRepo(BookStoreDbContext context)
+        public UserRepo(BookStoreDbContext context,   IPasswordHasher<User> passwordHasher)
         {
             _context = context;
+            _passwordHasher = passwordHasher;
         }
 
         public async Task<User> FetchUserByEmail(string? email)
@@ -57,7 +60,7 @@ namespace server.Repositories.UserRepo{
 
     if (user.Password != null)
     {
-        updateUser.Password = user.Password;
+        updateUser.Password = _passwordHasher.HashPassword(updateUser, user.Password);
     }
 
     if(isAdmin != null){
