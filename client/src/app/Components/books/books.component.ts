@@ -14,38 +14,57 @@ import { RouterModule } from '@angular/router';
 export class BooksComponent implements OnInit {
   books: any[] = [];
   currentPage: number = 1;
-  totalPages: number = 2;
-  filters: any = {};
+  totalPages: number = 1;
+  filters: any = {genres:[],authors:[]};
+  pageSize: number = 6;
+
+  constructor(private bookService: BookService) { }
 
   ngOnInit(): void {
-    // Static data for demonstration
-    this.books = [
-      { id: 1, name: 'Book 1', rating: 4.5, imageUrl: 'https://via.placeholder.com/150' },
-      { id: 2, name: 'Book 2', rating: 4.0, imageUrl: 'https://via.placeholder.com/150' },
-      { id: 3, name: 'Book 3', rating: 3.5, imageUrl: 'https://via.placeholder.com/150' },
-      { id: 4, name: 'Book 4', rating: 5.0, imageUrl: 'https://via.placeholder.com/150' },
-      { id: 5, name: 'Book 5', rating: 3.0, imageUrl: 'https://via.placeholder.com/150' },
-      { id: 6, name: 'Book 6', rating: 4.2, imageUrl: 'https://via.placeholder.com/150' },
-      // Add more books as needed
-    ];
+    this.loadFiltersFromLocalStorage();
+    this.fetchBooks();
   }
 
   onFiltersChanged(filters: any): void {
     this.filters = filters;
-    // Logic to filter books based on filters
+    this.fetchBooks();
   }
-
+  
   nextPage(): void {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
-      // Fetch next page of books
+      this.fetchBooks();
     }
   }
-
+  
   prevPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
-      // Fetch previous page of books
+      this.fetchBooks();
     }
   }
+  
+  fetchBooks(): void {
+    this.bookService.getBooks(this.currentPage, this.pageSize, this.filters).subscribe({
+      next: (response) => {
+        if (response.books && response.totalCount !== undefined) {
+          this.totalPages = Math.ceil(response.totalCount / this.pageSize);
+          this.books = response.books.$values || []; // Handle case where $values might be undefined
+        } else {
+          console.error('Invalid response structure:', response);
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching books:', error);
+      }
+    });
+  }
+
+  private loadFiltersFromLocalStorage(): void {
+    const savedFilters = localStorage.getItem('bookFilters');
+    if (savedFilters) {
+      this.filters = JSON.parse(savedFilters);
+    }
+  }
+
 }

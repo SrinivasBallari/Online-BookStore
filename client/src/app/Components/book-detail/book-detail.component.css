@@ -50,4 +50,11 @@
   .badge {
     font-size: 0.9rem;
   }
+
+  .book-image{
+    width: 200;  
+    height: 350px; 
+    object-fit: cover; 
+    border-radius: 8px; 
+}
   

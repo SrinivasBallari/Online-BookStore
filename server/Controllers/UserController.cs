@@ -1,15 +1,7 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Routing;
-using Microsoft.IdentityModel.Tokens;
 using server.ActionFilters;
 using server.DTO;
-using server.Models.DB;
-using server.Policies;
-using server.Services;
 using server.Services.UserService;
 
 namespace server.Controllers

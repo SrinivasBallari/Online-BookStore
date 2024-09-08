@@ -2,12 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using server.DTO;
 using server.Models.DB;
 using server.Services;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Swashbuckle.AspNetCore;
 using Swashbuckle.AspNetCore.Annotations;
 using Microsoft.AspNetCore.Authorization;
 using server.Policies;
+using server.ActionFilters;
 
 
 namespace server.Controllers
@@ -40,6 +38,28 @@ namespace server.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
+        /// <summary>
+        /// Retrieves books page wise and genre filter
+        /// </summary>
+        /// <returns>A list of books for a page with any specified genres</returns>
+        [HttpGet("{page}/{pageSize}/{genres}/{authors}")]
+        public async Task<ActionResult<IEnumerable<BookDTO>>> GetPageWiseBooks(int page,int pageSize,string genres,string authors)
+        {
+            try
+            {
+                List<string> genresList = genres=="none" ? new List<string>() : genres.Split(',').ToList();
+                List<string> authorsList = authors=="none" ? new List<string>() : authors.Split(',').ToList();
+                var books = await _bookService.GetPageWiseBooksAsync(page, pageSize,genresList,authorsList);
+                return Ok(books);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+
 
         /// <summary>
         /// Retrieves a specific book by its ID.
@@ -271,6 +291,43 @@ namespace server.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
+        /// <summary>
+        /// Posts a review for a book.
+        /// </summary>
+        /// <returns>Corresponding success or failure message</returns>
+        [HttpPost("review")]
+        [Authorize]
+        [JwtEmailClaimExtractorFilter]
+        public async Task<ActionResult<PostReviewResponseDTO>> PostUserReviewAsync([FromBody] PostReviewRequestDTO userReview){
+            try{
+                string userEmail = HttpContext.Items["userEmail"] as string;
+                var response = await _bookService.PostUserReviewAsync(userEmail,userReview.bookId,userReview.rating,userReview.review);
+                return Ok(new PostReviewResponseDTO{
+                    statusMessage = "Review Posted Successfully"
+                });
+            }
+            catch(Exception ex){
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Gets all reviews for a book.
+        /// </summary>
+        /// <returns>a list of reviews for a book</returns>
+        [HttpGet("reviews/{bookId}")]
+        public async Task<ActionResult<List<UserReview>>> GetReviews(int bookId){
+            try{
+                var reviews = await _bookService.GetReviews(bookId);
+                return Ok(reviews);
+            }
+            catch(Exception ex){
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+
     }
 }
 
