@@ -112,6 +112,8 @@ namespace OnlineBookStore
             builder.Services.AddTransient(typeof(IUserRepo), typeof(UserRepo));
             builder.Services.AddTransient(typeof(IPasswordHasher<User>), typeof(PasswordHasher<User>));
             builder.Services.AddTransient(typeof(ITokenGenerator), typeof(JwtTokenGenerator));
+            builder.Services.AddTransient(typeof(ICartService), typeof(CartService));
+            builder.Services.AddTransient (typeof(ICartRepo), typeof(CartRepo));
             builder.Services.AddTransient(typeof(IReviewRepo),typeof(ReviewRepo));
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>

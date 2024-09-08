@@ -21,13 +21,11 @@ public partial class BookStoreDbContext : DbContext
 
     public virtual DbSet<Cart> Carts { get; set; }
 
-    // public virtual DbSet<CartItem> { get; set;}
-    public virtual DbSet<CartItem> CartIterms { get; set; }
+    public virtual DbSet<CartItem> CartItems { get; set; }
+
     public virtual DbSet<Order> Orders { get; set; }
 
     public virtual DbSet<OrderItem> OrderItems { get; set; }
-
-
 
     public virtual DbSet<Payment> Payments { get; set; }
 
@@ -37,14 +35,11 @@ public partial class BookStoreDbContext : DbContext
 
     public virtual DbSet<Tag> Tags { get; set; }
 
-   
     public virtual DbSet<User> Users { get; set; }
-
-   
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=BookStoreDB;User ID=sa;Password=SqlServer@2277;TrustServerCertificate=true");
+        => optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=BookStoreDB;integrated Security=true;TrustServerCertificate=true");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -62,106 +57,105 @@ public partial class BookStoreDbContext : DbContext
                 .HasColumnName("bio");
         });
 
-            modelBuilder.Entity<Book>(entity =>
-            {
-                entity.HasKey(e => e.BookId).HasName("PK__Books__490D1AE1A84A3ED0");
+        modelBuilder.Entity<Book>(entity =>
+        {
+            entity.HasKey(e => e.BookId).HasName("PK__Books__490D1AE1A84A3ED0");
 
-                entity.Property(e => e.BookId).HasColumnName("book_id");
-                entity.Property(e => e.AuthorId).HasColumnName("author_id");
-                entity.Property(e => e.Description)
-                    .HasColumnType("text")
-                    .HasColumnName("description");
-                entity.Property(e => e.ImageUrl)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
-                    .HasColumnName("image_url");
-                entity.Property(e => e.Language)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
-                    .HasColumnName("language");
-                entity.Property(e => e.PagesCount).HasColumnName("pages_count");
-                entity.Property(e => e.Price)
-                    .HasColumnType("money")
-                    .HasColumnName("price");
-                entity.Property(e => e.PublishedDate).HasColumnName("published_date");
-                entity.Property(e => e.PublishedVersion).HasColumnName("published_version");
-                entity.Property(e => e.PublisherId).HasColumnName("publisher_id");
-                entity.Property(e => e.Title)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
-                    .HasColumnName("title");
+            entity.HasIndex(e => e.AuthorId, "IX_Books_author_id");
 
-                entity.HasOne(d => d.Author).WithMany(p => p.Books)
-                    .HasForeignKey(d => d.AuthorId)
-                    .HasConstraintName("FK__Books__author_id__3B75D760");
+            entity.HasIndex(e => e.PublisherId, "IX_Books_publisher_id");
 
-                entity.HasOne(d => d.Publisher).WithMany(p => p.Books)
-                    .HasForeignKey(d => d.PublisherId)
-                    .HasConstraintName("FK__Books__publisher__3C69FB99");
+            entity.Property(e => e.BookId).HasColumnName("book_id");
+            entity.Property(e => e.AuthorId).HasColumnName("author_id");
+            entity.Property(e => e.Description)
+                .HasColumnType("text")
+                .HasColumnName("description");
+            entity.Property(e => e.ImageUrl)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("image_url");
+            entity.Property(e => e.Language)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("language");
+            entity.Property(e => e.PagesCount).HasColumnName("pages_count");
+            entity.Property(e => e.Price)
+                .HasColumnType("money")
+                .HasColumnName("price");
+            entity.Property(e => e.PublishedDate).HasColumnName("published_date");
+            entity.Property(e => e.PublishedVersion).HasColumnName("published_version");
+            entity.Property(e => e.PublisherId).HasColumnName("publisher_id");
+            entity.Property(e => e.Title)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("title");
 
-                entity.HasMany(d => d.Tags).WithMany(p => p.Books)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "BookTag",
-                        r => r.HasOne<Tag>().WithMany()
-                            .HasForeignKey("TagId")
-                            .OnDelete(DeleteBehavior.ClientSetNull)
-                            .HasConstraintName("FK__BookTag__tag_id__44FF419A"),
-                        l => l.HasOne<Book>().WithMany()
-                            .HasForeignKey("BookId")
-                            .OnDelete(DeleteBehavior.ClientSetNull)
-                            .HasConstraintName("FK__BookTag__book_id__440B1D61"),
-                        j =>
-                        {
-                            j.HasKey("BookId", "TagId").HasName("PK__BookTag__3D2470CACC5A9021");
-                            j.ToTable("BookTag");
-                            j.IndexerProperty<int>("BookId").HasColumnName("book_id");
-                            j.IndexerProperty<int>("TagId").HasColumnName("tag_id");
-                        });
-            });
+            entity.HasOne(d => d.Author).WithMany(p => p.Books)
+                .HasForeignKey(d => d.AuthorId)
+                .HasConstraintName("FK__Books__author_id__3B75D760");
 
-       modelBuilder.Entity<Cart>(entity =>
-{
-    entity.HasKey(e => e.CartId).HasName("PK__Carts__2EF52A27B9CE3939");
+            entity.HasOne(d => d.Publisher).WithMany(p => p.Books)
+                .HasForeignKey(d => d.PublisherId)
+                .HasConstraintName("FK__Books__publisher__3C69FB99");
 
-    entity.Property(e => e.CartId).HasColumnName("cart_id");
-   
-    entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.HasMany(d => d.Tags).WithMany(p => p.Books)
+                .UsingEntity<Dictionary<string, object>>(
+                    "BookTag",
+                    r => r.HasOne<Tag>().WithMany()
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__BookTag__tag_id__44FF419A"),
+                    l => l.HasOne<Book>().WithMany()
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__BookTag__book_id__440B1D61"),
+                    j =>
+                    {
+                        j.HasKey("BookId", "TagId").HasName("PK__BookTag__3D2470CACC5A9021");
+                        j.ToTable("BookTag");
+                        j.HasIndex(new[] { "TagId" }, "IX_BookTag_tag_id");
+                        j.IndexerProperty<int>("BookId").HasColumnName("book_id");
+                        j.IndexerProperty<int>("TagId").HasColumnName("tag_id");
+                    });
+        });
 
- 
+        modelBuilder.Entity<Cart>(entity =>
+        {
+            entity.HasKey(e => e.CartId).HasName("PK__Carts__2EF52A274AC28DB8");
 
-    entity.HasOne(d => d.User).WithMany(p => p.Carts)
-        .HasForeignKey(d => d.UserId)
-        .HasConstraintName("FK__Carts__user_id__5441852A");
+            entity.Property(e => e.CartId).HasColumnName("cart_id");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
 
-    entity.HasMany(d => d.CartItems).WithOne(p => p.Cart)
-        .HasForeignKey(d => d.CartId)
-        .HasConstraintName("FK__CartItems__cart_id__12345678");
-});
-
+            entity.HasOne(d => d.User).WithMany(p => p.Carts)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK__Carts__user_id__619B8048");
+        });
 
         modelBuilder.Entity<CartItem>(entity =>
-{
-    entity.HasKey(e => e.CartItemId).HasName("PK__CartItems__12345678");
+        {
+            entity.HasKey(e => e.CartItemId).HasName("PK__CartItem__5D9A6C6EE5EB3BC3");
 
-    entity.Property(e => e.CartItemId).HasColumnName("cart_item_id");
-    entity.Property(e => e.CartId).HasColumnName("cart_id");
-    entity.Property(e => e.BookId).HasColumnName("book_id");
-    entity.Property(e => e.Quantity).HasColumnName("quantity");
+            entity.Property(e => e.CartItemId).HasColumnName("cart_item_id");
+            entity.Property(e => e.BookId).HasColumnName("book_id");
+            entity.Property(e => e.CartId).HasColumnName("cart_id");
+            entity.Property(e => e.Quantity).HasColumnName("quantity");
 
-    entity.HasOne(d => d.Book).WithMany(p => p.CartItems)
-        .HasForeignKey(d => d.BookId)
-        .HasConstraintName("FK__CartItems__book_id__12345678");
+            entity.HasOne(d => d.Book).WithMany(p => p.CartItems)
+                .HasForeignKey(d => d.BookId)
+                .HasConstraintName("FK__CartItems__book___656C112C");
 
-    entity.HasOne(d => d.Cart).WithMany(p => p.CartItems)
-        .HasForeignKey(d => d.CartId)
-        .HasConstraintName("FK__CartItems__cart_id__12345678");
-});
-
-
+            entity.HasOne(d => d.Cart).WithMany(p => p.CartItems)
+                .HasForeignKey(d => d.CartId)
+                .HasConstraintName("FK__CartItems__cart___6477ECF3");
+        });
 
         modelBuilder.Entity<Order>(entity =>
         {
             entity.HasKey(e => e.OrderId).HasName("PK__Orders__465962298B4F3117");
+
+            entity.HasIndex(e => e.PaymentId, "IX_Orders_payment_id");
+
+            entity.HasIndex(e => e.UserId, "IX_Orders_user_id");
 
             entity.Property(e => e.OrderId).HasColumnName("order_id");
             entity.Property(e => e.OrderDate).HasColumnName("order_date");
@@ -183,6 +177,10 @@ public partial class BookStoreDbContext : DbContext
             entity.HasKey(e => e.OrderItemId).HasName("PK__Order_it__3764B6BC850F45D3");
 
             entity.ToTable("Order_items");
+
+            entity.HasIndex(e => e.BookId, "IX_Order_items_book_id");
+
+            entity.HasIndex(e => e.OrderId, "IX_Order_items_order_id");
 
             entity.Property(e => e.OrderItemId).HasColumnName("order_item_id");
             entity.Property(e => e.BookId).HasColumnName("book_id");
@@ -233,6 +231,10 @@ public partial class BookStoreDbContext : DbContext
         modelBuilder.Entity<Review>(entity =>
         {
             entity.HasKey(e => e.ReviewId).HasName("PK__Reviews__60883D90FB2C6292");
+
+            entity.HasIndex(e => e.BookId, "IX_Reviews_book_id");
+
+            entity.HasIndex(e => e.UserId, "IX_Reviews_user_id");
 
             entity.Property(e => e.ReviewId).HasColumnName("review_id");
             entity.Property(e => e.BookId).HasColumnName("book_id");
