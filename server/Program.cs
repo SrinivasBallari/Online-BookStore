@@ -9,6 +9,8 @@ using server.Services;
 using server.Repositories;
 using System.Text.Json.Serialization;
 using Microsoft.OpenApi.Models;
+using server.Services.UserService;
+using server.Repositories.UserRepo;
 
 namespace OnlineBookStore
 {
@@ -103,9 +105,11 @@ namespace OnlineBookStore
             builder.Services.AddTransient(typeof(IBookService), typeof(BookService));
             builder.Services.AddTransient(typeof(IAuthorRepo), typeof(AuthorRepo));
             builder.Services.AddTransient(typeof(IOrderService), typeof(OrderService));
+            builder.Services.AddTransient(typeof(IUserService), typeof(UserService));
             builder.Services.AddTransient(typeof(IPublisherRepo), typeof(PublisherRepo));
             builder.Services.AddTransient(typeof(ITagRepo), typeof(TagRepo));
             builder.Services.AddTransient(typeof(IOrderRepo), typeof(OrderRepo));
+            builder.Services.AddTransient(typeof(IUserRepo), typeof(UserRepo));
             builder.Services.AddTransient(typeof(IPasswordHasher<User>), typeof(PasswordHasher<User>));
             builder.Services.AddTransient(typeof(ITokenGenerator), typeof(JwtTokenGenerator));
             builder.Services.AddTransient(typeof(ICartService), typeof(CartService));
