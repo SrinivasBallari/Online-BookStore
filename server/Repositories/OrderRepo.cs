@@ -65,12 +65,14 @@ namespace server.Repositories
                 var OrderItemResult = _context.OrderItems.Add(new OrderItem
                 {
                     OrderId = OrderResult.Entity.OrderId,
-                    BookId = item.BookId,
+                    BookId = item.Book.BookId,
                     Quantity = item.Quantity
                 });
             };
 
             await _context.SaveChangesAsync();
+
+
 
             return OrderResult.Entity;
             

@@ -7,7 +7,7 @@ namespace server.DTO
     {
         public string? PaymentType {  get; set; }
         public int? Total { get; set; }
-        public List<OrderItemInputDto> OrderedItems { get; set; }
+        public List<CartItemDto> OrderedItems { get; set; }
     }
 
     public class OrderReturnDto
@@ -32,6 +32,12 @@ namespace server.DTO
     {
         public int? BookId { get; set; }
         public int? Quantity { get; set; }
+    }
+
+    public class CartItemDto
+    {
+        public BookDTO Book { get; set; }
+        public int Quantity { get; set; }
     }
 }
 
