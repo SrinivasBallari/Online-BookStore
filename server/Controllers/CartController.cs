@@ -31,6 +31,7 @@ namespace server.Controllers
         
         /// <returns></returns>
         [HttpGet]
+        [Authorize]
         [JwtEmailClaimExtractorFilter]
         public async Task<IActionResult> GetBooksAvailableInCart()
         {
@@ -52,6 +53,7 @@ namespace server.Controllers
         /// <param name="bookId"></param>
         /// <returns>Count of items in the shopping cart</returns>
         [HttpPost("{bookId}")]
+        [Authorize]
         [JwtEmailClaimExtractorFilter]
         public async Task<IActionResult> AddBookToCart(int bookId)
         {

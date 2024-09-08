@@ -5,6 +5,7 @@ import { HomeComponent } from './Components/home/home.component';
 import { BookDetailComponent } from './Components/book-detail/book-detail.component';
 import { CartComponent } from './Components/cart/cart.component';
 import { UserProfileComponent } from './Components/user-profile/user-profile.component';
+import { AdminBooksComponent } from './Components/admin-books/admin-books.component';
 
 export const routes: Routes = [
     {
@@ -30,5 +31,9 @@ export const routes: Routes = [
     { 
         path: 'profile', 
         component: UserProfileComponent 
-    }
+    },
+    {
+        path: 'admin/books',
+        component : AdminBooksComponent
+    },
 ];

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BookService } from '../../Services/book-service.service';
 import { FormsModule } from '@angular/forms'; // Import FormsModule for ngModel
 import { AuthService } from '../../Services/auth.service';
+import { CartService } from '../../Services/cart.service';
 
 @Component({
   selector: 'app-book-detail',
@@ -24,7 +25,7 @@ export class BookDetailComponent implements OnInit {
   userReview: string = '';
   isLoggedIn: boolean = false;
 
-  constructor(private route: ActivatedRoute, private bookService: BookService,private authService:AuthService) {}
+  constructor(private route: ActivatedRoute, private bookService: BookService,private authService:AuthService,private cartService:CartService) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -65,7 +66,6 @@ export class BookDetailComponent implements OnInit {
   }
 
   submitReview(): void {
-    console.log("in func");
     if (this.bookId !== null && this.userRating && this.userReview) {
       const rev = {
         bookId: this.bookId,
@@ -84,7 +84,13 @@ export class BookDetailComponent implements OnInit {
   }
 
   addToCart(): void {
-
+    if(this.bookId != null){
+      this.cartService.addToCart(this.bookId).subscribe((response) => {
+        if(response){
+          alert("Book added to cart !!");
+        }
+      });
+    }
   }
 
   private calculateAverageRating(): void {

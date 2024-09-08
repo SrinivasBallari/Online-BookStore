@@ -109,7 +109,7 @@ namespace server.Controllers
         [HttpPost]
         [JwtEmailClaimExtractorFilter]
         [Authorize(Policy = SecurityPolicy.Customer)]
-        public async Task<IActionResult> PlaceOrderAsync([FromBody] string paymentType)
+        public async Task<IActionResult> PlaceOrderAsync([FromBody] OrderRequestDTO request)
         {
             try
             {
@@ -125,7 +125,7 @@ namespace server.Controllers
 
                 OrderDto order = new OrderDto
                 {
-                    PaymentType = paymentType,
+                    PaymentType = request.PaymentType,
                     Total = (int)totalCost, 
                     OrderedItems = cartItems
                 };

@@ -1,0 +1,115 @@
+
+<div class="container my-4">
+    <div class="card">
+      <div class="card-header">
+        <h4>Manage Books</h4>
+      </div>
+      <div class="card-body">
+        <!-- Add/Edit Book Form -->
+        <form [formGroup]="bookForm" (ngSubmit)="addOrUpdateBook()">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input id="title" formControlName="title" class="form-control" />
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="authorId" class="form-label">Author ID</label>
+              <input id="authorId" formControlName="authorId" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="authorName" class="form-label">Author Name</label>
+              <input id="authorName" formControlName="authorName" class="form-control" />
+            </div>
+            <div class="col-md-12 mb-3">
+              <label for="authorBio" class="form-label">Author Bio</label>
+              <textarea id="authorBio" formControlName="authorBio" class="form-control"></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="pagesCount" class="form-label">Pages Count</label>
+              <input id="pagesCount" formControlName="pagesCount" type="number" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="language" class="form-label">Language</label>
+              <input id="language" formControlName="language" class="form-control" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="publisherId" class="form-label">Publisher ID</label>
+              <input id="publisherId" formControlName="publisherId" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="publisherName" class="form-label">Publisher Name</label>
+              <input id="publisherName" formControlName="publisherName" class="form-control" />
+            </div>
+            <div class="col-md-12 mb-3">
+              <label for="publisherAddress" class="form-label">Publisher Address</label>
+              <input id="publisherAddress" formControlName="publisherAddress" class="form-control" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="publishedDate" class="form-label">Published Date</label>
+              <input id="publishedDate" formControlName="publishedDate" type="date" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="publishedVersion" class="form-label">Published Version</label>
+              <input id="publishedVersion" formControlName="publishedVersion" type="number" class="form-control" />
+            </div>
+            <div class="col-md-12 mb-3">
+              <label for="price" class="form-label">Price</label>
+              <input id="price" formControlName="price" type="number" step="0.01" class="form-control" />
+            </div>
+            <div class="col-md-12 mb-3">
+              <label for="description" class="form-label">Description</label>
+              <textarea id="description" formControlName="description" class="form-control"></textarea>
+            </div>
+            <div class="col-md-12 mb-3">
+              <label for="imageUrl" class="form-label">Image URL</label>
+              <input id="imageUrl" formControlName="imageUrl" class="form-control" />
+            </div>
+            <div class="col-md-12 mb-3">
+              <label for="tagIds" class="form-label">Tag IDs</label>
+              <input id="tagIds" formControlName="tagIds" class="form-control" />
+            </div>
+            <div class="col-md-12 mb-3">
+              <label for="tagNames" class="form-label">Tag Names</label>
+              <input id="tagNames" formControlName="tagNames" class="form-control" />
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">{{ editingBook ? 'Update Book' : 'Add Book' }}</button>
+          <button type="button" class="btn btn-secondary" (click)="resetForm()">Reset</button>
+        </form>
+  
+        <!-- Books Table -->
+        <table class="table mt-4">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Publisher</th>
+              <th>Published Date</th>
+              <th>Price</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let book of books">
+              <td>{{ book.title }}</td>
+              <td>{{ book.authorName }}</td>
+              <td>{{ book.publisherName }}</td>
+              <td>{{ book.publishedDate | date }}</td>
+              <td>${{ book.price }}</td>
+              <td>
+                <button class="btn btn-warning btn-sm" (click)="editBook(book)">Edit</button>
+                <button class="btn btn-danger btn-sm" (click)="deleteBook(book.id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
