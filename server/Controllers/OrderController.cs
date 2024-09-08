@@ -13,15 +13,17 @@ using server.ActionFilters;
 
 namespace server.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
+        private readonly ICartService _cartService;
 
-        public OrderController(IOrderService orderService)
+        public OrderController(IOrderService orderService,ICartService cartService)
         {
             _orderService = orderService;
+            _cartService = cartService;
         }
 
         /// <summary>
@@ -107,12 +109,29 @@ namespace server.Controllers
         [HttpPost]
         [JwtEmailClaimExtractorFilter]
         [Authorize(Policy = SecurityPolicy.Customer)]
-        public async Task<IActionResult> PlaceOrderAsync([FromBody] OrderDto order)
+        public async Task<IActionResult> PlaceOrderAsync([FromBody] string paymentType)
         {
             try
             {
                 string userEmail = HttpContext.Items["userEmail"] as string;
+                
+                List<CartItemDto> cartItems = await _cartService.GetBooksAvailableInCartServiceAsync(userEmail);
+                decimal? totalCost = 0;
+                foreach (CartItemDto item in cartItems)
+                {
+                    decimal? itemTotalCost = item.Book.Price * item.Quantity;
+                    totalCost += itemTotalCost;
+                }
+
+                OrderDto order = new OrderDto
+                {
+                    PaymentType = paymentType,
+                    Total = (int)totalCost, 
+                    OrderedItems = cartItems
+                };
+
                 var result = await _orderService.PlaceOrderServiceAsync(order,userEmail);
+                await _cartService.ClearCartServiceAsync(userEmail);
                 return Ok(result);
             }
             catch (Exception ex)
