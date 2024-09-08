@@ -1,104 +1,95 @@
-<div class="flex justify-center items-center h-screen bg-gray-100">
-  <div class="w-full max-w-md">
+<div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+  <div class="w-100" style="max-width: 28rem;">
     <form
       [formGroup]="registerForm"
       (ngSubmit)="onSubmit()"
-      class="bg-white shadow-lg rounded px-12 pt-6 pb-8 mb-4"
+      class="bg-white shadow-lg rounded p-4"
     >
-      <h2 class="text-2xl font-semibold text-gray-800 text-center mb-6">
+      <h2 class="h4 font-weight-bold text-center mb-4">
         Register
       </h2>
 
-      <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
+      <div class="mb-3">
+        <label class="form-label fw-bold" for="name">
           Name
         </label>
         <input
           formControlName="name"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          class="form-control"
           id="name"
           type="text"
-          placeholder="name"
+          placeholder="Name"
         />
       </div>
 
-      <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+      <div class="mb-3">
+        <label class="form-label fw-bold" for="email">
           Email
         </label>
         <input
           formControlName="email"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          class="form-control"
           id="email"
           type="email"
-          placeholder="email"
+          placeholder="Email"
         />
       </div>
 
-      <div class="mb-4">
-        <label
-          class="block text-gray-700 text-sm font-bold mb-2"
-          for="password"
-        >
+      <div class="mb-3">
+        <label class="form-label fw-bold" for="password">
           Password
         </label>
         <input
           formControlName="password"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          class="form-control"
           id="password"
           type="password"
-          placeholder="password"
+          placeholder="Password"
         />
       </div>
 
-      <div class="mb-6">
-        <label
-          class="block text-gray-700 text-sm font-bold mb-2"
-          for="address"
-        >
+      <div class="mb-3">
+        <label class="form-label fw-bold" for="address">
           Address
         </label>
         <input
           formControlName="address"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+          class="form-control"
           id="address"
-          placeholder="address"
+          type="text"
+          placeholder="Address"
         />
       </div>
 
-      <div class="mb-6">
-        <label
-          class="block text-gray-700 text-sm font-bold mb-2"
-          for="contact"
-        >
+      <div class="mb-3">
+        <label class="form-label fw-bold" for="contact">
           Contact
         </label>
         <input
           formControlName="contact"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+          class="form-control"
           id="contact"
-          placeholder="contact"
+          type="text"
+          placeholder="Contact"
         />
       </div>
 
-      <div class="mb-6">
-        <label
-          class="block text-gray-700 text-sm font-bold mb-2"
-          for="pincode"
-        >
+      <div class="mb-3">
+        <label class="form-label fw-bold" for="pincode">
           Pincode
         </label>
         <input
           formControlName="pincode"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+          class="form-control"
           id="pincode"
-          placeholder="pincode"
+          type="text"
+          placeholder="Pincode"
         />
       </div>
 
-      <div class="flex items-center justify-center">
+      <div class="d-flex justify-content-center">
         <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          class="btn btn-primary"
           type="submit"
         >
           Register

@@ -1,15 +1,12 @@
-using System.Threading.Tasks;
 using server.Models.DB;
 
-
-
-namespace server.Repositories{
-    public interface IAuthorRepo
+namespace server.Repositories
 {
-    Task<Author> GetByIdAsync(int authorId);
-    Task AddAsync(Author author);
-    
-      Task<IEnumerable<Author>> GetAllAuthorsAsync(); 
-}
+    public interface IAuthorRepo
+    {
+        Task<Author> GetByIdAsync(int authorId);
+        Task AddAsync(Author author);
+        Task<IEnumerable<Author>> GetAllAuthorsAsync();
+    }
 
 }

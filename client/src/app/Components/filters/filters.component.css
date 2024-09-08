@@ -1,0 +1,39 @@
+.filters-section {
+  padding: 1rem;
+}
+
+.filters-section h4 {
+  margin-bottom: 1rem;
+}
+
+.filters-section .form-check {
+  margin-bottom: 0.5rem;
+}
+
+.filters-section .accordion-button {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+}
+
+.filters-section .accordion-body {
+  background-color: #ffffff;
+}
+
+.filters-section .d-md-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.filters-section .mb-3 {
+  margin-bottom: 1rem;
+}
+
+/* Adjust accordion styling for small screens */
+@media (max-width: 767px) {
+  .filters-section .accordion-button {
+    background-color: #e9ecef;
+    border-color: #ced4da;
+  }
+}
+  
