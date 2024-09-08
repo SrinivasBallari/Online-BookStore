@@ -33,7 +33,7 @@ public partial class Book
 
     public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
-    public virtual ICollection<CartItem>? CartItems { get; set; } = new List<CartItem>();
+ //   public virtual ICollection<CartItem>? CartItems { get; set; } = new List<CartItem>();
 
     public virtual Publisher? Publisher { get; set; }
 
