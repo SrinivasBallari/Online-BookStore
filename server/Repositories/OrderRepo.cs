@@ -13,24 +13,113 @@ namespace server.Repositories
         {
             _context = context;
         }
-        public async Task<List<Order>> GetAllOrdersAsync()
+        public async Task<List<OrderReturnDto>> GetAllOrdersAsync()
         {
-            return await _context.Orders.ToListAsync();
+            return await _context.Orders
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Book)
+                .Select(o => new OrderReturnDto
+                {
+                    OrderId = o.OrderId,
+                    UserId = o.UserId,
+                    PaymentId = o.PaymentId,
+                    OrderDate = o.OrderDate,
+                    Total = o.Total,
+                    OrderedItems = o.OrderItems.Select(oi => new CartItemDto
+                    {
+                        Book = new BookDTO
+                        {
+                            BookId = oi.Book.BookId,
+                            Title = oi.Book.Title,
+                            AuthorId = oi.Book.AuthorId,
+                            AuthorName = oi.Book.Author != null ? oi.Book.Author.AuthorName : null,
+                            PagesCount = oi.Book.PagesCount,
+                            Language = oi.Book.Language,
+                            PublisherId = oi.Book.PublisherId,
+                            PublisherName = oi.Book.Publisher != null ? oi.Book.Publisher.PublisherName : null,
+                            PublishedDate = oi.Book.PublishedDate,
+                            PublishedVersion = oi.Book.PublishedVersion,
+                            Price = oi.Book.Price,
+                            Description = oi.Book.Description,
+                            ImageUrl = oi.Book.ImageUrl
+                        },
+                        Quantity = oi.Quantity ?? 0
+                    }).ToList()
+                }).ToListAsync();
         }
 
-        public async Task<List<Order>> GetAllOrdersbyMonthAsync(int month,int year)
+
+        public async Task<List<OrderReturnDto>> GetAllOrdersbyMonthAsync(int month,int year)
         {
-            return await _context.Orders.Where(o => o.OrderDate.HasValue &&
-                                                    o.OrderDate.Value.Month == month &&
-                                                    o.OrderDate.Value.Year == year ).ToListAsync();
+            return await _context.Orders
+              .Include(o => o.OrderItems)
+              .ThenInclude(oi => oi.Book)
+              .Where(o => o.OrderDate.HasValue &&
+                          o.OrderDate.Value.Month == month &&
+                          o.OrderDate.Value.Year == year)
+              .Select(o => new OrderReturnDto
+              {
+                  OrderId = o.OrderId,
+                  UserId = o.UserId,
+                  PaymentId = o.PaymentId,
+                  OrderDate = o.OrderDate,
+                  Total = o.Total,
+                  OrderedItems = o.OrderItems.Select(oi => new CartItemDto
+                  {
+                      Book = new BookDTO
+                      {
+                          BookId = oi.Book.BookId,
+                          Title = oi.Book.Title,
+                          AuthorId = oi.Book.AuthorId,
+                          AuthorName = oi.Book.Author != null ? oi.Book.Author.AuthorName : null,
+                          PagesCount = oi.Book.PagesCount,
+                          Language = oi.Book.Language,
+                          PublisherId = oi.Book.PublisherId,
+                          PublisherName = oi.Book.Publisher != null ? oi.Book.Publisher.PublisherName : null,
+                          PublishedDate = oi.Book.PublishedDate,
+                          PublishedVersion = oi.Book.PublishedVersion,
+                          Price = oi.Book.Price,
+                          Description = oi.Book.Description,
+                          ImageUrl = oi.Book.ImageUrl
+                      },
+                      Quantity = oi.Quantity ?? 0
+                  }).ToList()
+              }).ToListAsync();
         }
 
-        public async Task<List<Order>> GetAllOrdersbyEmailAsync(string email)
+        public async Task<List<OrderReturnDto>> GetAllOrdersbyEmailAsync(string email)
         {
             return await (from order in _context.Orders
-                         join user in _context.Users on order.UserId equals user.UserId
-                         where user.Email == email
-                         select order).ToListAsync();
+                          join user in _context.Users on order.UserId equals user.UserId
+                          where user.Email == email
+                          select new OrderReturnDto
+                          {
+                              OrderId = order.OrderId,
+                              UserId = order.UserId,
+                              PaymentId = order.PaymentId,
+                              OrderDate = order.OrderDate,
+                              Total = order.Total,
+                              OrderedItems = order.OrderItems.Select(oi => new CartItemDto
+                              {
+                                  Book = new BookDTO
+                                  {
+                                      BookId = oi.Book.BookId,
+                                      Title = oi.Book.Title,
+                                      AuthorId = oi.Book.AuthorId,
+                                      AuthorName = oi.Book.Author != null ? oi.Book.Author.AuthorName : null,
+                                      PagesCount = oi.Book.PagesCount,
+                                      Language = oi.Book.Language,
+                                      PublisherId = oi.Book.PublisherId,
+                                      PublisherName = oi.Book.Publisher != null ? oi.Book.Publisher.PublisherName : null,
+                                      PublishedDate = oi.Book.PublishedDate,
+                                      PublishedVersion = oi.Book.PublishedVersion,
+                                      Price = oi.Book.Price,
+                                      Description = oi.Book.Description,
+                                      ImageUrl = oi.Book.ImageUrl
+                                  },
+                                  Quantity = oi.Quantity ?? 0
+                              }).ToList()
+                          }).ToListAsync();
         }
 
         public async Task<List<OrderItem>> GetOrderDetailsAsync(int OrderId)

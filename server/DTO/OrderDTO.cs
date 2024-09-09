@@ -17,7 +17,7 @@ namespace server.DTO
         public int? PaymentId { get; set; }
         public DateOnly? OrderDate { get; set; }
         public int? Total { get; set; }
-
+        public List<CartItemDto> OrderedItems { get; set; }
     }
 
     public class OrderItemDto

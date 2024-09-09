@@ -31,7 +31,7 @@ namespace server.Controllers
         /// </summary>
         /// <returns>A list of Orders.</returns>
         [HttpGet]
-        [Authorize(Policy = SecurityPolicy.Admin)]
+        [Authorize]
         public async Task<IActionResult> GetAllOrdersAsync()
         {
             try
@@ -51,7 +51,7 @@ namespace server.Controllers
         /// </summary>
         /// <returns>List of orders based on provided date.</returns>
         [HttpGet("monthly/{month}/{year}")]
-        [Authorize(Policy = SecurityPolicy.Admin)]
+        [Authorize]
         public async Task<IActionResult> GetAllOrdersbyMonthAsync(int month, int year)
         {
             try
@@ -70,7 +70,7 @@ namespace server.Controllers
         /// </summary>
         /// <returns>A List of orders based on provided email</returns>
         [HttpGet("Email/{email}")]
-        [Authorize(Policy = SecurityPolicy.Admin)]
+        [Authorize]
         public async Task<IActionResult> GetAllOrdersbyEmailAsync(string email)
         {
             try
@@ -89,7 +89,7 @@ namespace server.Controllers
         /// </summary>
         /// <returns>Order details of a specific order</returns>
         [HttpGet("{orderId}")]
-        [Authorize(Policy = SecurityPolicy.Admin)]
+        [Authorize]
         public async Task<IActionResult> GetOrderDetailsAsync(int orderId)
         {
             try
@@ -108,8 +108,8 @@ namespace server.Controllers
         /// </summary>
         [HttpPost]
         [JwtEmailClaimExtractorFilter]
-        [Authorize(Policy = SecurityPolicy.Customer)]
-        public async Task<IActionResult> PlaceOrderAsync([FromBody] OrderRequestDTO request)
+        [Authorize]
+        public async Task<IActionResult> PlaceOrderAsync([FromBody] string paymentType)
         {
             try
             {
