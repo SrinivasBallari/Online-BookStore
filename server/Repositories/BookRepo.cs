@@ -2,9 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using server.DTO;
 using server.Models.DB;
- 
- 
 namespace server.Repositories{
 public class BookRepo : IBookRepo
 {
@@ -23,8 +22,52 @@ public class BookRepo : IBookRepo
             .Include(b => b.Tags)
             .ToListAsync();
     }
- 
-    public async Task<Book> GetBookByIdAsync(int bookId)
+
+        public async Task<PagedBooksResponse<PaginatedBooksDTO>> GetPageWiseBooksAsync(int page, int pageSize, List<string> genresList, List<string> authorsList)
+        {
+
+            var query = _context.Books
+                .Include(b => b.Tags)
+                .Include(b => b.Author)
+                .AsQueryable();
+
+            if (genresList.Count > 0)
+            {
+                query = query.Where(b => b.Tags.Any(t => genresList.Contains(t.Tag1)));
+            }
+
+            if (authorsList.Count > 0)
+            {
+                query = query.Where(b => authorsList.Contains(b.Author.AuthorName));
+            }
+
+            var totalCount = await query.CountAsync();
+
+            var books = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(b => new PaginatedBooksDTO
+                {
+                    BookId = b.BookId,
+                    Title = b.Title,
+                    AuthorName = b.Author.AuthorName,
+                    TagNames = b.Tags.Select(t => t.Tag1).ToList(),
+                    Price = b.Price,
+                    ImageUrl = b.ImageUrl,
+                    Language = b.Language,
+                })
+                .ToListAsync();
+
+            return new PagedBooksResponse<PaginatedBooksDTO>
+            {
+                Books = books,
+                PageNumber = page,
+                PageSize = pageSize,
+                TotalCount = totalCount
+            };
+        }
+
+        public async Task<Book> GetBookByIdAsync(int bookId)
     {
         return await _context.Books
             .Include(b => b.Author)
@@ -107,5 +150,5 @@ public async Task<bool> DeleteBookAsync(int bookId)
  
 }
  
+
 }
-has context menu

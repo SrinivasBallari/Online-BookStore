@@ -109,7 +109,7 @@ namespace server.Controllers
         [HttpPost]
         [JwtEmailClaimExtractorFilter]
         [Authorize]
-        public async Task<IActionResult> PlaceOrderAsync([FromBody] string paymentType)
+        public async Task<IActionResult> PlaceOrderAsync([FromBody] OrderRequestDTO request)
         {
             try
             {
