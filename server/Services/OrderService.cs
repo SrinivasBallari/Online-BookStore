@@ -17,47 +17,18 @@ namespace server.Services
 
         public async Task<List<OrderReturnDto>> GetAllOrdersServiceAsync()
         {
-            var result = await _orderRepo.GetAllOrdersAsync();
+            return await _orderRepo.GetAllOrdersAsync();
           
-            var orderDtos = result.Select(order => new OrderReturnDto
-            {
-                OrderId = order.OrderId,
-                UserId = order.UserId,
-                PaymentId = order.PaymentId,
-                OrderDate = order.OrderDate,
-                Total = order.Total
-            }).ToList();
-
-            return orderDtos;
         }
         public async Task<List<OrderReturnDto>> GetAllOrdersbyMonthServiceAsync(int month,int year)
         {
-            var result = await _orderRepo.GetAllOrdersbyMonthAsync(month,year);
-            var orderDtos = result.Select(order => new OrderReturnDto
-            {
-                OrderId = order.OrderId,
-                UserId = order.UserId,
-                PaymentId = order.PaymentId,
-                OrderDate = order.OrderDate,
-                Total = order.Total
-            }).ToList();
-
-            return orderDtos;
+            return await _orderRepo.GetAllOrdersbyMonthAsync(month,year);
 
         }
         public async Task<List<OrderReturnDto>> GetAllOrdersbyEmailServiceAsync(string email)
         {
-            var result = await _orderRepo.GetAllOrdersbyEmailAsync(email);
-            var orderDtos = result.Select(order => new OrderReturnDto
-           {
-               OrderId = order.OrderId,
-               UserId = order.UserId,
-               PaymentId = order.PaymentId,
-               OrderDate = order.OrderDate,
-               Total = order.Total
-           }).ToList();
-
-            return orderDtos;
+            return await _orderRepo.GetAllOrdersbyEmailAsync(email);
+          
         }
 
         public async Task<List<OrderItemDto>> GetOrderDetailsServiceAsync(int OrderId)

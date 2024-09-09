@@ -51,4 +51,25 @@ namespace server.DTO
         public string Address { get; set; }    // Publisher Address
     }
 
+
+    public class BookUpdateDTO
+    {
+        public int BookId { get; set; }          
+        public string Title { get; set; }
+        public int? AuthorId { get; set; }        // Nullable Author ID
+        public string? AuthorName { get; set; }   // Author Name
+        public string? AuthorBio { get; set; }    // Author Bio
+        public int? PagesCount { get; set; }
+        public string? Language { get; set; }
+        public int? PublisherId { get; set; }        // Nullable Publisher ID
+        public string? PublisherName { get; set; }      // Publisher Name
+        public string? PublisherAddress { get; set; } // Publisher Address
+        public DateOnly? PublishedDate { get; set; }
+        public double? PublishedVersion { get; set; }
+        public decimal? Price { get; set; }
+        public string? Description { get; set; }
+        public string? ImageUrl { get; set; }
+        public List<int?>? TagIds { get; set; }    // List of nullable Tag IDs
+        public List<string>? TagNames { get; set; }// List of Tag Names
+    }
 }
