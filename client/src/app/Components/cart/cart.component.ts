@@ -19,6 +19,8 @@ export class CartComponent implements OnInit {
   subTotal: number = 0;
   totalItems: number = 0;
   selectedPaymentMethod: string = '';
+  errorMessage: string | null = null;
+  successMessage: string | null = null; 
 
   constructor(private router: Router, private cartService: CartService) {}
 
@@ -49,7 +51,13 @@ export class CartComponent implements OnInit {
 
   removeItemFromCart(bookId: number): void {
     this.cartService.removeItemFromCart(bookId).subscribe((response) => {
-      alert('Book removed from cart!');
+      this.successMessage = `Book removed from cart!`; // Set the success message
+     
+      setTimeout(() => {
+        this.successMessage = null;
+      }, 3000);
+    
+     
       this.fetchCartData();
     });
   }
@@ -74,7 +82,13 @@ export class CartComponent implements OnInit {
     if (this.selectedPaymentMethod) {
       this.cartService.placeOrder(this.selectedPaymentMethod).subscribe((response) => {
         console.log(response);
-        alert('Payment successful via ' + this.selectedPaymentMethod);
+        this.errorMessage = `Payment successful via  ${this.selectedPaymentMethod}`; // Set the success message
+     
+        setTimeout(() => {
+          this.errorMessage = null;
+        }, 3000);
+      
+        
         this.fetchCartData();
       });
       

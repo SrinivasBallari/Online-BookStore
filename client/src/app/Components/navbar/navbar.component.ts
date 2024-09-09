@@ -13,6 +13,7 @@ import { AuthService } from '../../Services/auth.service';
 export class NavbarComponent {
   
   isLoggedIn: boolean = false;
+  isAdmin : boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -20,6 +21,18 @@ export class NavbarComponent {
     this.authService.isLoggedIn.subscribe((status : boolean) => {
       this.isLoggedIn = status;
     });
+
+    this.authService.isAdmin().subscribe((response) => {
+      if(response.message == "true"){
+        this.authService.isAdminTemp.next(true);
+        this.isAdmin = true;
+      }
+    });
+
+    this.authService.isUserAdmin.subscribe((status : boolean) => {
+      this.isAdmin = status;
+    });
+    
   }
 
   logout(): void {

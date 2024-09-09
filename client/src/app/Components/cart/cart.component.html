@@ -14,7 +14,10 @@
             <span>QUANTITY</span>
             <span>SUB-TOTAL</span>
           </div>
-
+          <div *ngIf="successMessage" class="alert alert-success" role="alert">
+            {{ successMessage }}
+          </div>
+          <div *ngIf="errorMessage" class="alert alert-success">{{ errorMessage }}</div>
           <!-- Cart Item Rows -->
           <div *ngFor="let prod of productsInCart; let i = index" class="my-4">
             <!-- Mobile View -->
