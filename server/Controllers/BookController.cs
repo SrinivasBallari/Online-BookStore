@@ -211,6 +211,7 @@ namespace server.Controllers
         {
              try
             {
+                Console.WriteLine(bookDTO);
                 var response = await _bookService.AddBookAsync(bookDTO);
                 if (response.Success)
                 {

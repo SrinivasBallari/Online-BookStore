@@ -17,24 +17,22 @@ export class AdminBooksComponent implements OnInit {
 
   constructor(private bookService: BookService, private fb: FormBuilder) {
     this.bookForm = this.fb.group({
-      title: ['', Validators.required],
-      authorId: [null],
-      authorName: [''],
-      authorBio: [''],
-      pagesCount: [null, Validators.required],
-      language: ['', Validators.required],
-      publisherId: [null],
-      publisherName: [''],
-      publisherAddress: [''],
-      publishedDate: ['', Validators.required],
-      publishedVersion: [null],
-      price: [null, Validators.required],
-      description: [''],
-      imageUrl: [''],
-      tagIds: [[]],
-      tagNames: [[]]
+      title: '',
+      authorName: '',
+      authorBio: '',
+      pagesCount: 0,
+      language: '',
+      publisherName: '',
+      publisherAddress: '',
+      publishedDate: '',
+      publishedVersion: '',
+      price: 0,
+      description: '',
+      imageUrl: '',
+      tagNames: [''],
     });
   }
+  
 
   ngOnInit(): void {
     this.loadBooks();
@@ -49,8 +47,23 @@ export class AdminBooksComponent implements OnInit {
   addOrUpdateBook(): void {
     if (this.bookForm.invalid) return;
 
-    const bookData = this.bookForm.value;
+    const bookData = {
+      title: this.bookForm.value.title,
+      authorName: this.bookForm.value.authorName,
+      authorBio: this.bookForm.value.authorBio,
+      pagesCount: this.bookForm.value.pagesCount,
+      language: this.bookForm.value.language,
+      publisherName: this.bookForm.value.publisherName,
+      publisherAddress: this.bookForm.value.publisherAddress,
+      publishedDate: this.bookForm.value.publishedDate,
+      publishedVersion: this.bookForm.value.publishedVersion,
+      price: this.bookForm.value.price,
+      description: this.bookForm.value.description,
+      imageUrl: this.bookForm.value.imageUrl,
+      tagNames: this.bookForm.value.tagNames.split(',')
+    };
     if (this.editingBook) {
+      
       this.bookService.updateBook(this.editingBook.id, bookData).subscribe(() => {
         this.loadBooks();
         this.resetForm();
@@ -71,6 +84,7 @@ export class AdminBooksComponent implements OnInit {
   deleteBook(id: number): void {
     this.bookService.deleteBook(id).subscribe(() => {
       this.loadBooks();
+      alert("deleted book");
     });
   }
 

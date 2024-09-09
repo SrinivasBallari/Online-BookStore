@@ -70,7 +70,7 @@ export class BookService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.post<any>(`${this.baseUrl}/api/books`, {bookData},{headers});
+    return this.http.post<any>(`${this.baseUrl}/api/books`, bookData,{headers});
   }
 
   updateBook(id: number, bookData: any): Observable<any> {
@@ -79,7 +79,7 @@ export class BookService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.post<any>(`${this.baseUrl}/api/books`, {bookData},{headers});
+    return this.http.post<any>(`${this.baseUrl}/api/books`, bookData,{headers});
   }
 
   deleteBook(id: number): Observable<any> {
