@@ -39,6 +39,11 @@ namespace server.DTO
         public BookDTO Book { get; set; }
         public int Quantity { get; set; }
     }
+
+    public class OrderRequestDTO
+    {
+        public string PaymentType {get; set;}
+    }
 }
 
 

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RegisterRequest } from '../Models/register-request.model';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -12,8 +12,9 @@ import { LoginRequest } from '../Models/login-request.model';
 export class AuthService {
   private baseUrl : string = 'http://localhost:5187';
   private loggedIn = new BehaviorSubject<boolean>(this.hasToken()); 
-  
-  constructor(private http : HttpClient, private router:Router) { }
+
+  constructor(private http : HttpClient, private router:Router) {
+  }
 
   private hasToken(): boolean {
     return !!localStorage.getItem('token');
@@ -39,6 +40,6 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('token');
-    this.loggedIn.next(false); 
+    this.loggedIn.next(false);
   }
 }

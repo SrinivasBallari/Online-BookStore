@@ -54,4 +54,40 @@ export class BookService {
     });
     return this.http.post<any>(`${this.baseUrl}/api/books/review`, rev,{headers});
   }
+
+  getAllBooks(): Observable<any[]> {
+    const token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.get<any>(`${this.baseUrl}/api/books`,{headers});
+  }
+
+  addBook(bookData: any): Observable<any> {
+    const token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.post<any>(`${this.baseUrl}/api/books`, bookData,{headers});
+  }
+
+  updateBook(id: number, bookData: any): Observable<any> {
+    const token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.post<any>(`${this.baseUrl}/api/books`, bookData,{headers});
+  }
+
+  deleteBook(id: number): Observable<any> {
+    const token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.delete<any>(`${this.baseUrl}/api/books/${id}`,{headers});
+  }
 }

@@ -20,7 +20,7 @@
           <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
             <a class="nav-link" routerLink="/">Home</a>
           </li>
-          <li class="nav-item" routerLinkActive="active">
+          <li class="nav-item" *ngIf="isLoggedIn" routerLinkActive="active">
             <a class="nav-link" routerLink="/cart">Cart</a>
           </li>
   
@@ -33,6 +33,9 @@
   
           <li class="nav-item" *ngIf="isLoggedIn" routerLinkActive="active">
             <a class="nav-link" routerLink="/profile">Profile</a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/admin/books">Books</a>
           </li>
           <li class="nav-item" *ngIf="isLoggedIn" routerLinkActive="active">
             <button

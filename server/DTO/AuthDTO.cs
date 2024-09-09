@@ -22,4 +22,8 @@ namespace server.DTO
         public string Email { get; set; }
         public string Token { get; set; }
     }
+
+    public class VerifyUserRoleDTO {
+        public string message {get; set;}
+    }
 }

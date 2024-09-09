@@ -1,10 +1,12 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using server.DTO;
 using server.Models.DB;
+using server.Policies;
 using server.Services;
 
 namespace server.Controllers
@@ -55,6 +57,15 @@ namespace server.Controllers
             {
                 return Unauthorized(new { Message = ex.Message });
             }
+        }
+
+        [HttpGet("verifyUserRole")]
+        [Authorize(Policy = SecurityPolicy.Admin)]
+        public IActionResult VerifyUserRole(){
+            VerifyUserRoleDTO obj = new VerifyUserRoleDTO {
+                message = "true"
+            };
+            return Ok(obj);
         }
     }
 }

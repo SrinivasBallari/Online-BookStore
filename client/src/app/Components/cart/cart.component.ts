@@ -1,77 +1,83 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { CartService } from '../../Services/cart.service';
+import { Cart } from '../../Models/cart.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './cart.component.html',
-  styleUrl: './cart.component.css'
+  styleUrl: './cart.component.css',
 })
-export class CartComponent {
-  productsInCart = [
-    {
-      image: 'https://via.placeholder.com/150',
-      name: 'Book 1',
-      price: 25,
-      quantity: 2
-    },
-    {
-      image: 'https://via.placeholder.com/150',
-      name: 'Book 2',
-      price: 15,
-      quantity: 1
-    },
-    {
-      image: 'https://via.placeholder.com/150',
-      name: 'Book 3',
-      price: 20,
-      quantity: 3
-    },{
-      image: 'https://via.placeholder.com/150',
-      name: 'Book 1',
-      price: 25,
-      quantity: 2
-    },
-    {
-      image: 'https://via.placeholder.com/150',
-      name: 'Book 2',
-      price: 15,
-      quantity: 1
-    },
-    {
-      image: 'https://via.placeholder.com/150',
-      name: 'Book 3',
-      price: 20,
-      quantity: 3
-    },{
-      image: 'https://via.placeholder.com/150',
-      name: 'Book 1',
-      price: 25,
-      quantity: 2
-    },
-    {
-      image: 'https://via.placeholder.com/150',
-      name: 'Book 2',
-      price: 15,
-      quantity: 1
-    },
-    {
-      image: 'https://via.placeholder.com/150',
-      name: 'Book 3',
-      price: 20,
-      quantity: 3
-    }
-  ];
+export class CartComponent implements OnInit {
+  
+  productsInCart: Cart[] = [];
+  subTotal: number = 0;
+  totalItems: number = 0;
+  selectedPaymentMethod: string = '';
 
-  removeProduct(index: number) {
-    this.productsInCart.splice(index, 1);
+  constructor(private router: Router, private cartService: CartService) {}
+
+  ngOnInit(): void {
+    this.fetchCartData();
   }
 
-  updateQuantity(index: number, change: number) {
-    this.productsInCart[index].quantity += change;
-    if (this.productsInCart[index].quantity < 1) {
-      this.productsInCart[index].quantity = 1;
+  navigateToHome() {
+    this.router.navigate(['']);
+  }
+
+  fetchCartData(): void {
+    this.subTotal = 0; 
+    this.cartService.fetchCartData().subscribe((response) => {
+      this.productsInCart = response.$values.map((item: any) => {
+        this.subTotal += item.book.price * item.quantity; 
+        return {
+          bookId: item.book.bookId,
+          imageUrl: item.book.imageUrl,
+          title: item.book.title,
+          price: item.book.price,
+          quantity: item.quantity,
+        };
+      });
+      this.totalItems = this.productsInCart.length;
+    });
+  }
+
+  removeItemFromCart(bookId: number): void {
+    this.cartService.removeItemFromCart(bookId).subscribe((response) => {
+      alert('Book removed from cart!');
+      this.fetchCartData();
+    });
+  }
+
+  reduceItemQuantity(bookId: number): void {
+    if (bookId != null) {
+      this.cartService.reduceItemQuantity(bookId).subscribe(() => {
+        this.fetchCartData();
+      });
+    }
+  }
+
+  increaseItemQuantity(bookId: number): void {
+    if (bookId != null) {
+      this.cartService.addToCart(bookId).subscribe(() => {
+        this.fetchCartData();
+      });
+    }
+  }
+
+  pay(): void {
+    if (this.selectedPaymentMethod) {
+      this.cartService.placeOrder(this.selectedPaymentMethod).subscribe((response) => {
+        console.log(response);
+        alert('Payment successful via ' + this.selectedPaymentMethod);
+        this.fetchCartData();
+      });
+      
     }
   }
 }

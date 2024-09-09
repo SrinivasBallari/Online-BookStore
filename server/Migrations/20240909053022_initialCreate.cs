@@ -101,8 +101,7 @@ namespace server.Migrations
                     published_version = table.Column<double>(type: "float", nullable: true),
                     price = table.Column<decimal>(type: "money", nullable: true),
                     description = table.Column<string>(type: "text", nullable: true),
-                    image_url = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: true),
-                    Quantity = table.Column<int>(type: "int", nullable: false)
+                    image_url = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -117,6 +116,24 @@ namespace server.Migrations
                         column: x => x.publisher_id,
                         principalTable: "Publishers",
                         principalColumn: "publisher_id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Carts",
+                columns: table => new
+                {
+                    cart_id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    user_id = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__Carts__2EF52A274AC28DB8", x => x.cart_id);
+                    table.ForeignKey(
+                        name: "FK__Carts__user_id__619B8048",
+                        column: x => x.user_id,
+                        principalTable: "Users",
+                        principalColumn: "user_id");
                 });
 
             migrationBuilder.CreateTable(
@@ -168,30 +185,6 @@ namespace server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Carts",
-                columns: table => new
-                {
-                    cart_id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    user_id = table.Column<int>(type: "int", nullable: true),
-                    BookId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK__Carts__2EF52A27B9CE3939", x => x.cart_id);
-                    table.ForeignKey(
-                        name: "FK_Carts_Books_BookId",
-                        column: x => x.BookId,
-                        principalTable: "Books",
-                        principalColumn: "book_id");
-                    table.ForeignKey(
-                        name: "FK__Carts__user_id__5441852A",
-                        column: x => x.user_id,
-                        principalTable: "Users",
-                        principalColumn: "user_id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Reviews",
                 columns: table => new
                 {
@@ -219,6 +212,31 @@ namespace server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CartItems",
+                columns: table => new
+                {
+                    cart_item_id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    cart_id = table.Column<int>(type: "int", nullable: true),
+                    book_id = table.Column<int>(type: "int", nullable: true),
+                    quantity = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__CartItem__5D9A6C6EE5EB3BC3", x => x.cart_item_id);
+                    table.ForeignKey(
+                        name: "FK__CartItems__book___656C112C",
+                        column: x => x.book_id,
+                        principalTable: "Books",
+                        principalColumn: "book_id");
+                    table.ForeignKey(
+                        name: "FK__CartItems__cart___6477ECF3",
+                        column: x => x.cart_id,
+                        principalTable: "Carts",
+                        principalColumn: "cart_id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Order_items",
                 columns: table => new
                 {
@@ -243,31 +261,6 @@ namespace server.Migrations
                         principalColumn: "order_id");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "CartIterms",
-                columns: table => new
-                {
-                    cart_item_id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    cart_id = table.Column<int>(type: "int", nullable: true),
-                    book_id = table.Column<int>(type: "int", nullable: true),
-                    quantity = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK__CartItems__12345678", x => x.cart_item_id);
-                    table.ForeignKey(
-                        name: "FK__CartItems__book_id__12345678",
-                        column: x => x.book_id,
-                        principalTable: "Books",
-                        principalColumn: "book_id");
-                    table.ForeignKey(
-                        name: "FK__CartItems__cart_id__12345678",
-                        column: x => x.cart_id,
-                        principalTable: "Carts",
-                        principalColumn: "cart_id");
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Books_author_id",
                 table: "Books",
@@ -284,19 +277,14 @@ namespace server.Migrations
                 column: "tag_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartIterms_book_id",
-                table: "CartIterms",
+                name: "IX_CartItems_book_id",
+                table: "CartItems",
                 column: "book_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartIterms_cart_id",
-                table: "CartIterms",
+                name: "IX_CartItems_cart_id",
+                table: "CartItems",
                 column: "cart_id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Carts_BookId",
-                table: "Carts",
-                column: "BookId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Carts_user_id",
@@ -341,7 +329,7 @@ namespace server.Migrations
                 name: "BookTag");
 
             migrationBuilder.DropTable(
-                name: "CartIterms");
+                name: "CartItems");
 
             migrationBuilder.DropTable(
                 name: "Order_items");
