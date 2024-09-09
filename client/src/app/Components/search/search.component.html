@@ -1,0 +1,33 @@
+<div class="books-section">
+    <div class="row justify-content-between">
+      <div class="col-md-3">
+       
+      </div>
+      <div class="col-md-9">
+        <div class="row">
+          <!-- Loop through the books array -->
+          <div *ngFor="let book of books" class="col-md-4 mb-4">
+            <div class="card">
+              <!-- Book Image -->
+              <img [src]="book.imageUrl" class="card-img-top book-image" alt="{{ book.title }}">
+              <div class="card-body">
+                <!-- Book Title -->
+                <h5 class="card-title">{{ book.title }}</h5>
+                <!-- Book Author -->
+                <p class="card-text">Author: {{ book.authorName }}</p>
+                <!-- Book Language -->
+                <p class="card-text">Language: {{ book.language }}</p>
+                <!-- Tags -->
+                <span *ngFor="let tag of book.tagNames?.$values" class="badge bg-info me-1 mb-2">{{ tag }}</span>
+                <br>
+                <!-- View Details Button -->
+                <a [routerLink]="['/book-details', book.bookId]" class="btn btn-primary">View Details</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+      </div>
+    </div>
+  </div>
+  
