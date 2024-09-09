@@ -2,17 +2,21 @@
     <h2>Orders-Analytics</h2>
 
     <div class="chart-container">
-        <canvas  id="OrderAnalytics">{{ chart}}</canvas>
+      <br>
+      <canvasjs-chart [options]="chartOptions"></canvasjs-chart>
+      <br>
     </div>
     
     <!-- Filter by Month and Date -->
+     <br>
+    <h2>Orders</h2>
     <div class="row mb-3">
       <div class="col-md-4">
-        <label for="month">Enter Month</label><br>
+        <label for="month">Filter by month</label><br>
         <input type="number" class="form-control" [(ngModel)]="month" placeholder="Enter Month (1-12)" />
       </div>
       <div class="col-md-4">
-        <label for="month">Enter Year</label><br>
+        <label for="month">Filter by year</label><br>
         <input type="number" class="form-control" [(ngModel)]="year" placeholder="Enter Year (ex:2024)" />
       </div>
       <div class="col-md-4">

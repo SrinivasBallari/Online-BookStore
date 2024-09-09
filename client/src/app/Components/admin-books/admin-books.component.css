@@ -1,16 +1,19 @@
-.table th, .table td {
-    vertical-align: middle;
-  }
-  
-  .card-header {
-    background-color: #f8f9fa;
-  }
-  
-  .card-body {
-    padding: 1.5rem;
-  }
-  
-  .btn-primary {
-    margin-right: 0.5rem;
-  }
-  
+.table th,
+.table td {
+  vertical-align: middle;
+}
+
+.card-header {
+  background-color: #f8f9fa;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.btn-primary {
+  margin-right: 0.5rem;
+}
+.admin-books-html{
+  min-height: 100vh;
+}

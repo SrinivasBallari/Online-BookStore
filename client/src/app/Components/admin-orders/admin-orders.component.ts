@@ -1,89 +1,139 @@
-import { Component, OnInit } from '@angular/core';
-import { Chart } from 'chart.js';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AdminService } from '../../Services/admin.service';
+import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-admin-orders',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    CanvasJSAngularChartsModule,
+  ],
   templateUrl: './admin-orders.component.html',
-  styleUrl: './admin-orders.component.css'
+  styleUrl: './admin-orders.component.css',
 })
-export class AdminOrdersComponent implements OnInit {
+export class AdminOrdersComponent implements OnInit, AfterViewInit {
   orders: any[] = [];
   paginatedOrders: any[] = [];
   currentPage = 1;
   pageSize = 10;
   totalPages: number = 0;
   month: number = 0;
-  year: number = 0;
+  year: number = 2024;
   email: string = '';
-  public chart:any;
+  public chartOptions: any;
+  monthlyOrderCounts: any[] = [];
 
-  constructor(private adminService: AdminService) { }
+  constructor(
+    private adminService: AdminService, 
+  ) {}
 
   ngOnInit(): void {
-    this.getOrders();
-    this.createChart();
+    this.getOrders(); 
   }
 
+  ngAfterViewInit(): void {
+    this.createEmptyChart();
+  }
 
-  createChart(){
-
-    this.chart = new Chart("OrderAnalytics", {
-      // type: 'line',
-      type: 'line', 
-      data: {
-        labels: ['2022-05-10', '2022-05-11', '2022-05-12','2022-05-13',
-                                 '2022-05-14', '2022-05-15', '2022-05-16','2022-05-17', ], 
-           datasets: [
-          {
-            label: "Sales",
-            data: ['467','576', '572', '79', '92',
-                                 '574', '573', '576'],
-            backgroundColor: 'blue'
-          },
-          {
-            label: "Profit",
-            data: ['542', '542', '536', '327', '17',
-                                     '0.00', '538', '541'],
-            backgroundColor: 'limegreen'
-          }  
-        ]
+  createEmptyChart(): void {
+    this.chartOptions = {
+      title: {
+        text: "Monthly Orders of 2024"
       },
-      options: {
-        aspectRatio:2.5
-      }
-    });
+      animationEnabled: true,
+      data: [{
+        type: "column",
+        dataPoints: []
+      }]
+    };
   }
 
   getOrders(): void {
-    this.adminService.getAllOrders().subscribe(response => {
+    this.adminService.getAllOrders().subscribe((response) => {
       this.orders = response.$values;
       this.paginateOrders();
+      this.calculateMonthlyOrderCounts();
+      this.updateChart();
     });
+  }
+
+  calculateMonthlyOrderCounts(): void {
+    const monthlyCounts = Array(12).fill(0); 
+
+    this.orders.forEach(order => {
+      const orderDate = new Date(order.orderDate);
+      if (orderDate.getFullYear() === this.year) {
+        const month = orderDate.getMonth(); 
+        monthlyCounts[month]++;
+      }
+    });
+
+    this.monthlyOrderCounts = monthlyCounts.map((count, index) => ({
+      x: index + 1,
+      y: count,
+    }));
+  }
+
+  updateChart(): void {
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  
+    // Map the monthly counts with month names for better readability on the x-axis
+    const labeledMonthlyOrderCounts = this.monthlyOrderCounts.map((data, index) => ({
+      x: index + 1,
+      label: monthNames[index],  
+      y: data.y 
+    }));
+  
+    this.chartOptions = {
+      title: {
+        text: "Monthly Orders of 2024"
+      },
+      axisX: {
+        title: "Months", 
+        interval: 1,
+        labelFormatter: function(e: any) {
+          return monthNames[e.value - 1]; 
+        }
+      },
+      axisY: {
+        title: "Order Count", 
+        includeZero: true
+      },
+      animationEnabled: true,
+      data: [{
+        type: "column",
+        dataPoints: labeledMonthlyOrderCounts 
+      }]
+    };
   }
 
   filterOrders(): void {
     if (this.month && this.year) {
-      this.adminService.filterOrders(this.month,this.year).subscribe(response => {
-        this.orders = response.$values;
-        this.paginateOrders();
-      });
+      this.adminService
+        .filterOrders(this.month, this.year)
+        .subscribe((response) => {
+          this.orders = response.$values;
+          this.paginateOrders();
+          this.calculateMonthlyOrderCounts();
+          this.updateChart();
+        });
     } else {
       this.getOrders();
     }
   }
 
-  filterOrdersByEmail(): void {
-    
-  }
-
   paginateOrders(): void {
     const startIndex = (this.currentPage - 1) * this.pageSize;
-    this.paginatedOrders = this.orders.slice(startIndex, startIndex + this.pageSize);
+    this.paginatedOrders = this.orders.slice(
+      startIndex,
+      startIndex + this.pageSize
+    );
     this.totalPages = Math.ceil(this.orders.length / this.pageSize);
   }
 
@@ -93,5 +143,4 @@ export class AdminOrdersComponent implements OnInit {
       this.paginateOrders();
     }
   }
-
 }

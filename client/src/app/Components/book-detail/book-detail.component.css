@@ -57,4 +57,7 @@
     object-fit: cover; 
     border-radius: 8px; 
 }
+.book-detail-html{
+  min-height: 100vh;
+}
   
