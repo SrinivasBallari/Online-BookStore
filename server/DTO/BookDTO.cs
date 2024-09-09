@@ -24,6 +24,14 @@ namespace server.DTO
         public List<string>? TagNames { get; set; }// List of Tag Names
     }
 
+    public class PagedBooksResponse<T>
+    {
+        public List<T> Books { get; set; }
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
+        public int TotalCount { get; set; }
+    }
+
     public class BooksAddedResponseDTO{
     
         public required string message { get; set; }
@@ -51,7 +59,6 @@ namespace server.DTO
         public string Address { get; set; }    // Publisher Address
     }
 
-
     public class BookUpdateDTO
     {
         public int BookId { get; set; }          
@@ -71,5 +78,32 @@ namespace server.DTO
         public string? ImageUrl { get; set; }
         public List<int?>? TagIds { get; set; }    // List of nullable Tag IDs
         public List<string>? TagNames { get; set; }// List of Tag Names
+    }
+
+    public class PaginatedBooksDTO
+    {
+        public string ImageUrl {get; set;}
+        public int? BookId { get; set; }
+        public string Title { get; set; }
+        public string? AuthorName { get; set; }
+        public string? Language { get; set; }
+        public decimal? Price { get; set; }
+        public List<string>? TagNames { get; set; }
+    }
+
+    public class PostReviewRequestDTO{
+        public int bookId {get; set;}
+        public int rating {get; set;}
+        public string review {get; set;}
+    }
+
+    public class PostReviewResponseDTO{
+        public string statusMessage {get; set;}
+    }
+
+    public class UserReview{
+        public string userName {get; set;}
+        public int rating {get; set;}
+        public string review {get; set;}
     }
 }

@@ -26,8 +26,10 @@ export class LoginComponent {
       this.authService.login(credentials).subscribe({
         next: (response) => {
           this.authService.setTokenAndNavigateToHome(response.token);
+          
         },
       });
+
     }
   }
 }

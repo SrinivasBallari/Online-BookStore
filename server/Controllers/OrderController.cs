@@ -125,7 +125,7 @@ namespace server.Controllers
 
                 OrderDto order = new OrderDto
                 {
-                    PaymentType = paymentType,
+                    PaymentType = request.PaymentType,
                     Total = (int)totalCost, 
                     OrderedItems = cartItems
                 };

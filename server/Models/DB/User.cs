@@ -19,7 +19,7 @@ public partial class User
 
     public string? Password { get; set; }
 
-    public string Role { get; set; } = null!;
+    public string Role { get; set; } = "customer";
 
     public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
 

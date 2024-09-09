@@ -35,7 +35,7 @@ namespace server.Migrations
                     b.HasKey("BookId", "TagId")
                         .HasName("PK__BookTag__3D2470CACC5A9021");
 
-                    b.HasIndex("TagId");
+                    b.HasIndex(new[] { "TagId" }, "IX_BookTag_tag_id");
 
                     b.ToTable("BookTag", (string)null);
                 });
@@ -114,9 +114,6 @@ namespace server.Migrations
                         .HasColumnType("int")
                         .HasColumnName("publisher_id");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .HasMaxLength(255)
                         .IsUnicode(false)
@@ -126,9 +123,9 @@ namespace server.Migrations
                     b.HasKey("BookId")
                         .HasName("PK__Books__490D1AE1A84A3ED0");
 
-                    b.HasIndex("AuthorId");
+                    b.HasIndex(new[] { "AuthorId" }, "IX_Books_author_id");
 
-                    b.HasIndex("PublisherId");
+                    b.HasIndex(new[] { "PublisherId" }, "IX_Books_publisher_id");
 
                     b.ToTable("Books");
                 });
@@ -142,17 +139,12 @@ namespace server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"));
 
-                    b.Property<int?>("BookId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("UserId")
                         .HasColumnType("int")
                         .HasColumnName("user_id");
 
                     b.HasKey("CartId")
-                        .HasName("PK__Carts__2EF52A27B9CE3939");
-
-                    b.HasIndex("BookId");
+                        .HasName("PK__Carts__2EF52A274AC28DB8");
 
                     b.HasIndex("UserId");
 
@@ -181,13 +173,13 @@ namespace server.Migrations
                         .HasColumnName("quantity");
 
                     b.HasKey("CartItemId")
-                        .HasName("PK__CartItems__12345678");
+                        .HasName("PK__CartItem__5D9A6C6EE5EB3BC3");
 
                     b.HasIndex("BookId");
 
                     b.HasIndex("CartId");
 
-                    b.ToTable("CartIterms");
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("server.Models.DB.Order", b =>
@@ -218,9 +210,9 @@ namespace server.Migrations
                     b.HasKey("OrderId")
                         .HasName("PK__Orders__465962298B4F3117");
 
-                    b.HasIndex("PaymentId");
+                    b.HasIndex(new[] { "PaymentId" }, "IX_Orders_payment_id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex(new[] { "UserId" }, "IX_Orders_user_id");
 
                     b.ToTable("Orders");
                 });
@@ -249,9 +241,9 @@ namespace server.Migrations
                     b.HasKey("OrderItemId")
                         .HasName("PK__Order_it__3764B6BC850F45D3");
 
-                    b.HasIndex("BookId");
+                    b.HasIndex(new[] { "BookId" }, "IX_Order_items_book_id");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex(new[] { "OrderId" }, "IX_Order_items_order_id");
 
                     b.ToTable("Order_items", (string)null);
                 });
@@ -346,9 +338,9 @@ namespace server.Migrations
                     b.HasKey("ReviewId")
                         .HasName("PK__Reviews__60883D90FB2C6292");
 
-                    b.HasIndex("BookId");
+                    b.HasIndex(new[] { "BookId" }, "IX_Reviews_book_id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex(new[] { "UserId" }, "IX_Reviews_user_id");
 
                     b.ToTable("Reviews");
                 });
@@ -465,14 +457,10 @@ namespace server.Migrations
 
             modelBuilder.Entity("server.Models.DB.Cart", b =>
                 {
-                    b.HasOne("server.Models.DB.Book", null)
-                        .WithMany("Carts")
-                        .HasForeignKey("BookId");
-
                     b.HasOne("server.Models.DB.User", "User")
                         .WithMany("Carts")
                         .HasForeignKey("UserId")
-                        .HasConstraintName("FK__Carts__user_id__5441852A");
+                        .HasConstraintName("FK__Carts__user_id__619B8048");
 
                     b.Navigation("User");
                 });
@@ -482,12 +470,12 @@ namespace server.Migrations
                     b.HasOne("server.Models.DB.Book", "Book")
                         .WithMany("CartItems")
                         .HasForeignKey("BookId")
-                        .HasConstraintName("FK__CartItems__book_id__12345678");
+                        .HasConstraintName("FK__CartItems__book___656C112C");
 
                     b.HasOne("server.Models.DB.Cart", "Cart")
                         .WithMany("CartItems")
                         .HasForeignKey("CartId")
-                        .HasConstraintName("FK__CartItems__cart_id__12345678");
+                        .HasConstraintName("FK__CartItems__cart___6477ECF3");
 
                     b.Navigation("Book");
 
@@ -553,8 +541,6 @@ namespace server.Migrations
             modelBuilder.Entity("server.Models.DB.Book", b =>
                 {
                     b.Navigation("CartItems");
-
-                    b.Navigation("Carts");
 
                     b.Navigation("OrderItems");
 

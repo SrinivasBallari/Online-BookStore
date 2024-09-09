@@ -2,12 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using server.DTO;
 using server.Models.DB;
 using server.Services;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Swashbuckle.AspNetCore;
 using Swashbuckle.AspNetCore.Annotations;
 using Microsoft.AspNetCore.Authorization;
 using server.Policies;
+using server.ActionFilters;
 
 
 namespace server.Controllers
@@ -27,7 +25,6 @@ namespace server.Controllers
         /// Retrieves all books.
         /// </summary>
         /// <returns>A list of all books.</returns>
-        [Authorize(Policy = SecurityPolicy.Customer)]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BookDTO>>> GetAllBooks()
         {
@@ -43,11 +40,32 @@ namespace server.Controllers
         }
 
         /// <summary>
+        /// Retrieves books page wise and genre filter
+        /// </summary>
+        /// <returns>A list of books for a page with any specified genres</returns>
+        [HttpGet("{page}/{pageSize}/{genres}/{authors}")]
+        public async Task<ActionResult<IEnumerable<BookDTO>>> GetPageWiseBooks(int page,int pageSize,string genres,string authors)
+        {
+            try
+            {
+                List<string> genresList = genres=="none" ? new List<string>() : genres.Split(',').ToList();
+                List<string> authorsList = authors=="none" ? new List<string>() : authors.Split(',').ToList();
+                var books = await _bookService.GetPageWiseBooksAsync(page, pageSize,genresList,authorsList);
+                return Ok(books);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+
+
+        /// <summary>
         /// Retrieves a specific book by its ID.
         /// </summary>
         /// <param name="bookId">The ID of the book to retrieve.</param>
         /// <returns>The book with the specified ID.</returns>
-        [Authorize(Policy = SecurityPolicy.Customer)]
         [HttpGet("{bookId}")]
         public async Task<ActionResult<BookDTO>> GetBookById(int bookId)
         {
@@ -71,7 +89,6 @@ namespace server.Controllers
         /// </summary>
         /// <param name="searchString">The search string to look for in titles, tags, author names, publisher names, or language.</param>
         /// <returns>A list of books matching the search criteria.</returns>
-        [Authorize(Policy = SecurityPolicy.Customer)]
         [HttpGet("search/{searchString}")]
         public async Task<ActionResult<IEnumerable<BookDTO>>> SearchBooks(string searchString)
         {
@@ -90,7 +107,6 @@ namespace server.Controllers
         /// Retrieves all categories (tags).
         /// </summary>
         /// <returns>A list of all categories (tags).</returns>
-        [Authorize]
         [HttpGet("categories")]
         [SwaggerOperation(Summary = "Retrieves all categories", Description = "Gets a list of all book categories (tags) in the system.")]
         [SwaggerResponse(200, "Returns a list of categories", typeof(IEnumerable<Tag>))]
@@ -112,7 +128,6 @@ namespace server.Controllers
         /// </summary>
         /// <param name="tagId">The ID of the category (tag).</param>
         /// <returns>A list of books in the specified category.</returns>
-        [Authorize(Policy = SecurityPolicy.Customer)]
         [HttpGet("category/{categoryId}")]
         [SwaggerOperation(Summary = "Retrieves books by category", Description = "Gets a list of books that belong to a specific category (tag).")]
         [SwaggerResponse(200, "Returns a list of books in the specified category", typeof(IEnumerable<BookDTO>))]
@@ -134,7 +149,6 @@ namespace server.Controllers
         /// </summary>
         /// <param name="bookId">The ID of the book for which to find similar books.</param>
         /// <returns>A list of books similar to the specified book.</returns>
-        [Authorize(Policy = SecurityPolicy.Customer)]
         [HttpGet("getSimilarBooks/{bookId}")]
         [SwaggerOperation(Summary = "Retrieves similar books", Description = "Gets a list of books similar to the specified book based on category (tag).")]
         [SwaggerResponse(200, "Returns a list of similar books", typeof(IEnumerable<BookDTO>))]
@@ -197,6 +211,7 @@ namespace server.Controllers
         {
              try
             {
+                Console.WriteLine(bookDTO);
                 var response = await _bookService.AddBookAsync(bookDTO);
                 if (response.Success)
                 {
@@ -243,7 +258,6 @@ namespace server.Controllers
         /// </summary>
         /// <returns>A list of authors.</returns>
         [HttpGet("authors")]
-        [Authorize]
         [SwaggerOperation(Summary = "Retrieves all authors", Description = "Gets a list of all authors in the system.")]
         [SwaggerResponse(200, "Returns a list of authors", typeof(IEnumerable<AuthorDTO>))]
         public async Task<ActionResult<IEnumerable<AuthorDTO>>> GetAllAuthors()
@@ -264,7 +278,6 @@ namespace server.Controllers
         /// </summary>
         /// <returns>A list of publishers.</returns>
         [HttpGet("publishers")]
-        [Authorize]
         [SwaggerOperation(Summary = "Retrieves all publishers", Description = "Gets a list of all publishers in the system.")]
         [SwaggerResponse(200, "Returns a list of publishers", typeof(IEnumerable<PublisherDTO>))]
         public async Task<ActionResult<IEnumerable<PublisherDTO>>> GetAllPublishers()
@@ -279,6 +292,43 @@ namespace server.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
+        /// <summary>
+        /// Posts a review for a book.
+        /// </summary>
+        /// <returns>Corresponding success or failure message</returns>
+        [HttpPost("review")]
+        [Authorize]
+        [JwtEmailClaimExtractorFilter]
+        public async Task<ActionResult<PostReviewResponseDTO>> PostUserReviewAsync([FromBody] PostReviewRequestDTO userReview){
+            try{
+                string userEmail = HttpContext.Items["userEmail"] as string;
+                var response = await _bookService.PostUserReviewAsync(userEmail,userReview.bookId,userReview.rating,userReview.review);
+                return Ok(new PostReviewResponseDTO{
+                    statusMessage = "Review Posted Successfully"
+                });
+            }
+            catch(Exception ex){
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Gets all reviews for a book.
+        /// </summary>
+        /// <returns>a list of reviews for a book</returns>
+        [HttpGet("reviews/{bookId}")]
+        public async Task<ActionResult<List<UserReview>>> GetReviews(int bookId){
+            try{
+                var reviews = await _bookService.GetReviews(bookId);
+                return Ok(reviews);
+            }
+            catch(Exception ex){
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+
     }
 }
 

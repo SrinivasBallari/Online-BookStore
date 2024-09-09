@@ -1,0 +1,129 @@
+<div class="container my-5">
+  <div class="row">
+    <!-- Cart Items Section -->
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h4>Your Cart</h4>
+          <button class="btn btn-outline-primary" (click)="navigateToHome()">Continue Shopping</button>
+        </div>
+        <div class="card-body">
+          <div class="d-none d-lg-flex justify-content-between bg-light p-3 rounded">
+            <span class="w-50">PRODUCTS</span>
+            <span>PRICE</span>
+            <span>QUANTITY</span>
+            <span>SUB-TOTAL</span>
+          </div>
+
+          <!-- Cart Item Rows -->
+          <div *ngFor="let prod of productsInCart; let i = index" class="my-4">
+            <!-- Mobile View -->
+            <div class="d-block d-lg-none card p-3 mb-4 shadow-sm">
+              <button class="btn btn-danger btn-sm rounded-circle" (click)="removeItemFromCart(prod.bookId)">X</button>
+              <img [src]="prod.imageUrl" alt="Product Image" class="img-fluid my-3">
+              <div class="d-flex justify-content-between">
+                <span>Name:</span>
+                <span>{{ prod.title }}</span>
+              </div>
+              <div class="d-flex justify-content-between my-2">
+                <span>Quantity</span>
+                <div class="d-flex gap-2 align-items-center">
+                  <button class="btn btn-light btn-sm" (click)="reduceItemQuantity(prod.bookId)">-</button>
+                  <span>{{ prod.quantity }}</span>
+                  <button class="btn btn-light btn-sm" (click)="increaseItemQuantity(prod.bookId)">+</button>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span>Total:</span>
+                <span>${{ prod.price * prod.quantity }}</span>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span>Price:</span>
+                <span>${{ prod.price }}</span>
+              </div>
+            </div>
+
+            <!-- Desktop View -->
+            <div class="d-none d-lg-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center w-50">
+                <button class="btn btn-danger btn-sm rounded-circle" (click)="removeItemFromCart(prod.bookId)">x</button>
+                <img [src]="prod.imageUrl" alt="Product Image" class="img-thumbnail mx-3" style="width: 100px;">
+                <span>{{ prod.title }}</span>
+              </div>
+              <span>{{ prod.price }} $</span>
+              <div class="d-flex gap-2">
+                <button class="btn btn-light btn-sm" (click)="reduceItemQuantity(prod.bookId)">-</button>
+                <span>{{ prod.quantity }}</span>
+                <button class="btn btn-light btn-sm" (click)="increaseItemQuantity(prod.bookId)">+</button>
+              </div>
+              <span>{{ prod.price * prod.quantity }} $</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Options Section -->
+    <div class="col-lg-4">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Choose Payment Option</h5>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="form-check">
+              <input 
+                class="form-check-input" 
+                type="radio" 
+                name="paymentMethod" 
+                id="upiOption" 
+                value="UPI"
+                [(ngModel)]="selectedPaymentMethod"
+              >
+              <label class="form-check-label" for="upiOption">
+                UPI
+              </label>
+            </div>
+            <div class="form-check">
+              <input 
+                class="form-check-input" 
+                type="radio" 
+                name="paymentMethod" 
+                id="codOption" 
+                value="COD"
+                [(ngModel)]="selectedPaymentMethod"
+              >
+              <label class="form-check-label" for="codOption">
+                Cash On Delivery
+              </label>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Cart Totals Section -->
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Cart Totals</h5>
+        </div>
+        <div class="card-body">
+          <div class="d-flex justify-content-between my-2">
+            <span>Sub-total:</span>
+            <span>{{ subTotal | currency }}</span>
+          </div>
+          <div class="d-flex justify-content-between my-2">
+            <span>Number of Books:</span>
+            <span>{{ totalItems }}</span>
+          </div>
+        </div>
+        <div class="card-footer d-flex justify-content-between align-items-center">
+          <button class="btn btn-success" [disabled]="!selectedPaymentMethod" (click)="pay()">Pay</button>
+          <div class="text-right">
+            <p>Total:</p>
+            <p>{{ subTotal | currency }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,7 +2,6 @@ import { Component, NgModule } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
-  NgModel,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
