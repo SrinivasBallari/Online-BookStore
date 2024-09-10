@@ -181,7 +181,6 @@
       <tr>
         <th>Order ID</th>
         <th>Order Date</th>
-        <th>Ordered By</th>
         <th>Books</th>
         <th>Total Price</th>
       </tr>
@@ -190,7 +189,6 @@
       <tr *ngFor="let order of paginatedOrders">
         <td>{{ order.orderId }}</td>
         <td>{{ order.orderDate }}</td>
-        <td>{{ order.userId }}</td>
         <td>
           <ul>
             <li *ngFor="let item of order.orderedItems.$values">

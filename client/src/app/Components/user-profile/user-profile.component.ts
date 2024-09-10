@@ -4,7 +4,6 @@ import { UserService } from '../../Services/user.service.service';
 import { UserProfileResponse } from '../../Models/user-profile-response.model';
 import { CommonModule } from '@angular/common'; 
 import { ReactiveFormsModule } from '@angular/forms';
-import { AdminService } from '../../Services/admin.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -48,7 +47,6 @@ export class UserProfileComponent implements OnInit {
       isAdmin: [{ value: false, disabled: true }]
     });
     this.getUserDetails();
-    this.getOrders();
   }
 
   getOrders(): void {
@@ -90,6 +88,8 @@ export class UserProfileComponent implements OnInit {
         });
         this.isAdminUser = data.isAdmin;
         this.loading = false;
+        this.getOrders();
+
       },
       (error: any) => { 
         console.error('Failed to load user details', error);

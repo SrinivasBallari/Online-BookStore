@@ -54,6 +54,11 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
     };
   }
 
+  resetFilters(): void {
+    this.month = 0;
+    this.getOrders();
+  }
+
   getOrders(): void {
     this.adminService.getAllOrders().subscribe((response) => {
       this.orders = response.$values;
