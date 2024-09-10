@@ -1,176 +1,217 @@
 <div class="container mt-4 userprofile-html">
-    <h2 class="mb-4">User Profile</h2>
-  
-    <!-- Error Message -->
-    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+  <h2 class="mb-4">User Profile</h2>
 
-    <div *ngIf="successMessage" class="alert alert-success" role="alert">
-      {{ successMessage }}
-    </div>
-    
-  
-    <form [formGroup]="userForm">
-      <!-- Name Field -->
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <label for="name" class="form-label">Name</label>
-          <input
-            id="name"
-            type="text"
-            class="form-control"
-            formControlName="name"
-            [disabled]="!editingField['name']"
-          />
-          <button
-            class="btn btn-sm btn-primary"
-            *ngIf="!editingField['name']"
-            (click)="enableEditing('name')"
-          >
-            Edit
-          </button>
-          <button
-            class="btn btn-sm btn-success"
-            *ngIf="editingField['name']"
-            (click)="saveField('name')"
-          >
-            Save
-          </button>
-        </div>
-  
-        <!-- Address Field -->
-        <div class="col-md-6 mb-3">
-          <label for="address" class="form-label">Address</label>
-          <input
-            id="address"
-            type="text"
-            class="form-control"
-            formControlName="address"
-            [disabled]="!editingField['address']"
-          />
-          <button
-            class="btn btn-sm btn-primary"
-            *ngIf="!editingField['address']"
-            (click)="enableEditing('address')"
-          >
-            Edit
-          </button>
-          <button
-            class="btn btn-sm btn-success"
-            *ngIf="editingField['address']"
-            (click)="saveField('address')"
-          >
-            Save
-          </button>
-        </div>
-      </div>
-  
-      <!-- Contact Field -->
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <label for="contact" class="form-label">Contact</label>
-          <input
-            id="contact"
-            type="text"
-            class="form-control"
-            formControlName="contact"
-            [disabled]="!editingField['contact']"
-          />
-          <button
-            class="btn btn-sm btn-primary"
-            *ngIf="!editingField['contact']"
-            (click)="enableEditing('contact')"
-          >
-            Edit
-          </button>
-          <button
-            class="btn btn-sm btn-success"
-            *ngIf="editingField['contact']"
-            (click)="saveField('contact')"
-          >
-            Save
-          </button>
-        </div>
-  
-        <!-- Pin Code Field -->
-        <div class="col-md-6 mb-3">
-          <label for="pinCode" class="form-label">Pin Code</label>
-          <input
-            id="pinCode"
-            type="text"
-            class="form-control"
-            formControlName="pinCode"
-            [disabled]="!editingField['pinCode']"
-          />
-          <button
-            class="btn btn-sm btn-primary"
-            *ngIf="!editingField['pinCode']"
-            (click)="enableEditing('pinCode')"
-          >
-            Edit
-          </button>
-          <button
-            class="btn btn-sm btn-success"
-            *ngIf="editingField['pinCode']"
-            (click)="saveField('pinCode')"
-          >
-            Save
-          </button>
-        </div>
-      </div>
-  
-      <!-- Email Field -->
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <label for="email" class="form-label">Email</label>
-          <input
-            id="email"
-            type="email"
-            class="form-control"
-            formControlName="email"
-            [disabled]="!editingField['email']"
-          />
-          <button
-            class="btn btn-sm btn-primary"
-            *ngIf="!editingField['email']"
-            (click)="enableEditing('email')"
-          >
-            Edit
-          </button>
-          <button
-            class="btn btn-sm btn-success"
-            *ngIf="editingField['email']"
-            (click)="saveField('email')"
-          >
-            Save
-          </button>
-        </div>
-  
-        <!-- Password Field -->
-        <div class="col-md-6 mb-3">
-          <label for="password" class="form-label">Password</label>
-          <input
-            id="password"
-            type="password"
-            class="form-control"
-            formControlName="password"
-            [disabled]="!editingField['password']"
-          />
-          <button
-            class="btn btn-sm btn-primary"
-            *ngIf="!editingField['password']"
-            (click)="enableEditing('password')"
-          >
-            Edit
-          </button>
-          <button
-            class="btn btn-sm btn-success"
-            *ngIf="editingField['password']"
-            (click)="saveField('password')"
-          >
-            Save
-          </button>
-        </div>
-      </div>
-    </form>
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <div *ngIf="successMessage" class="alert alert-success" role="alert">
+    {{ successMessage }}
   </div>
-  
+
+  <form [formGroup]="userForm">
+    <!-- Name Field -->
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input
+          id="name"
+          type="text"
+          class="form-control"
+          formControlName="name"
+          [disabled]="!editingField['name']"
+        />
+        <button
+          class="btn btn-sm btn-primary"
+          *ngIf="!editingField['name']"
+          (click)="enableEditing('name')"
+        >
+          Edit
+        </button>
+        <button
+          class="btn btn-sm btn-success"
+          *ngIf="editingField['name']"
+          (click)="saveField('name')"
+        >
+          Save
+        </button>
+      </div>
+
+      <!-- Address Field -->
+      <div class="col-md-6 mb-3">
+        <label for="address" class="form-label">Address</label>
+        <input
+          id="address"
+          type="text"
+          class="form-control"
+          formControlName="address"
+          [disabled]="!editingField['address']"
+        />
+        <button
+          class="btn btn-sm btn-primary"
+          *ngIf="!editingField['address']"
+          (click)="enableEditing('address')"
+        >
+          Edit
+        </button>
+        <button
+          class="btn btn-sm btn-success"
+          *ngIf="editingField['address']"
+          (click)="saveField('address')"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+
+    <!-- Contact Field -->
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="contact" class="form-label">Contact</label>
+        <input
+          id="contact"
+          type="text"
+          class="form-control"
+          formControlName="contact"
+          [disabled]="!editingField['contact']"
+        />
+        <button
+          class="btn btn-sm btn-primary"
+          *ngIf="!editingField['contact']"
+          (click)="enableEditing('contact')"
+        >
+          Edit
+        </button>
+        <button
+          class="btn btn-sm btn-success"
+          *ngIf="editingField['contact']"
+          (click)="saveField('contact')"
+        >
+          Save
+        </button>
+      </div>
+
+      <!-- Pin Code Field -->
+      <div class="col-md-6 mb-3">
+        <label for="pinCode" class="form-label">Pin Code</label>
+        <input
+          id="pinCode"
+          type="text"
+          class="form-control"
+          formControlName="pinCode"
+          [disabled]="!editingField['pinCode']"
+        />
+        <button
+          class="btn btn-sm btn-primary"
+          *ngIf="!editingField['pinCode']"
+          (click)="enableEditing('pinCode')"
+        >
+          Edit
+        </button>
+        <button
+          class="btn btn-sm btn-success"
+          *ngIf="editingField['pinCode']"
+          (click)="saveField('pinCode')"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+
+    <!-- Email Field -->
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          id="email"
+          type="email"
+          class="form-control"
+          formControlName="email"
+          [disabled]="!editingField['email']"
+        />
+        <button
+          class="btn btn-sm btn-primary"
+          *ngIf="!editingField['email']"
+          (click)="enableEditing('email')"
+        >
+          Edit
+        </button>
+        <button
+          class="btn btn-sm btn-success"
+          *ngIf="editingField['email']"
+          (click)="saveField('email')"
+        >
+          Save
+        </button>
+      </div>
+
+      <!-- Password Field -->
+      <div class="col-md-6 mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          id="password"
+          type="password"
+          class="form-control"
+          formControlName="password"
+          [disabled]="!editingField['password']"
+        />
+        <button
+          class="btn btn-sm btn-primary"
+          *ngIf="!editingField['password']"
+          (click)="enableEditing('password')"
+        >
+          Edit
+        </button>
+        <button
+          class="btn btn-sm btn-success"
+          *ngIf="editingField['password']"
+          (click)="saveField('password')"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <br><br>
+  <h2>Your Past Orders</h2>
+  <br>
+  <!-- Orders Table -->
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Order Date</th>
+        <th>Ordered By</th>
+        <th>Books</th>
+        <th>Total Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of paginatedOrders">
+        <td>{{ order.orderId }}</td>
+        <td>{{ order.orderDate }}</td>
+        <td>{{ order.userId }}</td>
+        <td>
+          <ul>
+            <li *ngFor="let item of order.orderedItems.$values">
+              {{ item.book.title }}
+            </li>
+          </ul>
+        </td>
+        <td>{{ order.total }}$</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  <nav>
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="changePage(currentPage - 1)">Previous</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" (click)="changePage(currentPage + 1)">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>
