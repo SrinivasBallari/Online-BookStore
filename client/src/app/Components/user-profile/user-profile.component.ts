@@ -2,22 +2,29 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../Services/user.service.service';
 import { UserProfileResponse } from '../../Models/user-profile-response.model';
-import { CommonModule } from '@angular/common'; // Import CommonModule for *ngIf and other common directives
-import { ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsModule for forms
+import { CommonModule } from '@angular/common'; 
+import { ReactiveFormsModule } from '@angular/forms';
+import { AdminService } from '../../Services/admin.service';
 
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule] // Add the necessary imports here
+  imports: [CommonModule, ReactiveFormsModule] 
 })
 export class UserProfileComponent implements OnInit {
   userForm!: FormGroup;
   isAdminUser: boolean = false;
   loading: boolean = false;
   errorMessage: string | null = null;
-  successMessage: string | null = null; // Holds success message
+  successMessage: string | null = null; 
+  orders: any[] = [];
+  paginatedOrders: any[] = [];
+  currentPage = 1;
+  pageSize = 10;
+  totalPages: number = 0;
+  userEmail : string = '';
 
   editingField: { [key: string]: boolean } = {
     name: false,
@@ -40,14 +47,38 @@ export class UserProfileComponent implements OnInit {
       password: [{ value: '', disabled: true }, Validators.required],
       isAdmin: [{ value: false, disabled: true }]
     });
-
     this.getUserDetails();
+    this.getOrders();
+  }
+
+  getOrders(): void {
+    this.userService.getOrdersOfUser(this.userEmail).subscribe((response) => {
+      this.orders = response.$values;
+      this.paginateOrders();
+    });
+  }
+
+  paginateOrders(): void {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    this.paginatedOrders = this.orders.slice(
+      startIndex,
+      startIndex + this.pageSize
+    );
+    this.totalPages = Math.ceil(this.orders.length / this.pageSize);
+  }
+
+  changePage(page: number): void {
+    if (page > 0 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.paginateOrders();
+    }
   }
 
   getUserDetails(): void {
     this.loading = true;
     this.userService.getUserDetails().subscribe(
       (data: UserProfileResponse) => {
+        this.userEmail = data.email;
         this.userForm.patchValue({
           name: data.name,
           address: data.address,
@@ -63,7 +94,7 @@ export class UserProfileComponent implements OnInit {
       (error: any) => { 
         console.error('Failed to load user details', error);
         
-        this.errorMessage = 'Failed to load user details ${error}.';
+        this.errorMessage = 'Failed to load user details , Please log-in.';
         this.loading = false;
       }
     );

@@ -12,35 +12,40 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) {}
 
-  // Get User Details with Authorization Token
   getUserDetails(): Observable<UserProfileResponse> {
-    const token = localStorage.getItem('token'); // Get token from localStorage
+    const token = localStorage.getItem('token'); 
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}` // Attach the token to Authorization header
+      'Authorization': `Bearer ${token}`
     });
 
     return this.httpClient.get<UserProfileResponse>(`${this.baseUrl}/api/users`, { headers })
       .pipe(
         map((response: any) => {
-          // Map the response to return UserProfileResponse
           return response as UserProfileResponse;
         })
       );
   }
 
-  // Update User Details with Authorization Token
   updateUserDetails(updatedField: any): Observable<any> {
-    const token = localStorage.getItem('token'); // Get token from localStorage
+    const token = localStorage.getItem('token'); 
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}` // Attach the token to Authorization header
+      'Authorization': `Bearer ${token}`
     });
 
     return this.httpClient.post<any>(`${this.baseUrl}/api/users`, updatedField, { headers })
       .pipe(
         map((response: any) => {
-          // Handle and map response if needed
           return response;
         })
       );
+  }
+
+  getOrdersOfUser(email : string):Observable<any>{
+    const token = localStorage.getItem('token'); 
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.httpClient.get<any>(`${this.baseUrl}/api/Order/Email/${email}`,{ headers });
   }
 }

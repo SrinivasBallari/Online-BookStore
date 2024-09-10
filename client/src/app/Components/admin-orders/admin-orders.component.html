@@ -1,0 +1,70 @@
+<div class="container mt-4">
+    <h2>Orders-Analytics</h2>
+
+    <div class="chart-container">
+      <br>
+      <canvasjs-chart [options]="chartOptions"></canvasjs-chart>
+      <br>
+    </div>
+    
+    <!-- Filter by Month and Date -->
+     <br>
+    <h2>Orders</h2>
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <label for="month">Filter by month</label><br>
+        <input type="number" class="form-control" [(ngModel)]="month" placeholder="Enter Month (1-12)" />
+      </div>
+      <div class="col-md-4">
+        <label for="month">Filter by year</label><br>
+        <input type="number" class="form-control" [(ngModel)]="year" placeholder="Enter Year (ex:2024)" />
+      </div>
+      <div class="col-md-4">
+        <br>
+        <button class="btn btn-primary" (click)="filterOrders()">Filter</button>
+      </div>
+    </div>
+  
+    <!-- Orders Table -->
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Order Date</th>
+          <th>Ordered By</th>
+          <th>Books</th>
+          <th>Total Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of paginatedOrders">
+          <td>{{ order.orderId }}</td>
+          <td>{{ order.orderDate }}</td>
+          <td>{{ order.userId }}</td>
+          <td>
+            <ul>
+              <li *ngFor="let item of order.orderedItems.$values">
+                {{ item.book.title }}
+              </li>
+            </ul>
+          </td>
+          <td>{{ order.total }}$</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Pagination -->
+    <nav>
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <a class="page-link" (click)="changePage(currentPage - 1)">Previous</a>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <a class="page-link" (click)="changePage(currentPage + 1)">Next</a>
+        </li>
+      </ul>
+    </nav>
+  
+
+  </div>
+  

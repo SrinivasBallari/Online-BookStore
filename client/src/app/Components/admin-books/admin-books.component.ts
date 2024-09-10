@@ -1,7 +1,8 @@
-import { Component, NgModule, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BookService } from '../../Services/book-service.service'; 
 import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-admin-books',
@@ -14,6 +15,7 @@ export class AdminBooksComponent implements OnInit {
   books: any[] = [];
   bookForm: FormGroup;
   editingBook: any = null;
+  successMessage: string | null = null; 
 
   constructor(private bookService: BookService, private fb: FormBuilder) {
     this.bookForm = this.fb.group({
@@ -84,7 +86,10 @@ export class AdminBooksComponent implements OnInit {
   deleteBook(id: number): void {
     this.bookService.deleteBook(id).subscribe(() => {
       this.loadBooks();
-      alert("deleted book");
+      this.successMessage = `Book deleted successfully.`;
+      setTimeout(() => {
+        this.successMessage = null;
+      }, 3000);
     });
   }
 

@@ -12,6 +12,7 @@ import { LoginRequest } from '../Models/login-request.model';
 export class AuthService {
   private baseUrl : string = 'http://localhost:5187';
   private loggedIn = new BehaviorSubject<boolean>(this.hasToken()); 
+  public isAdminTemp = new BehaviorSubject<boolean>(false);
 
   constructor(private http : HttpClient, private router:Router) {
   }
@@ -24,6 +25,10 @@ export class AuthService {
     return this.loggedIn.asObservable();
   }
 
+  get isUserAdmin() : Observable<boolean> {
+    return this.isAdminTemp.asObservable();
+  }
+
   register(userData : RegisterRequest) : Observable<AuthResponse>{
     return this.http.post<AuthResponse>(`${this.baseUrl}/Auth/register`,userData);
   }
@@ -32,14 +37,30 @@ export class AuthService {
     return this.http.post<AuthResponse>(`${this.baseUrl}/Auth/login`, credentials);
   }
 
+  isAdmin():Observable<any> {
+    const token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.get<any>(`${this.baseUrl}/Auth/verifyUserRole`,{headers});
+  }
+
   setTokenAndNavigateToHome(token: string): void {
     localStorage.setItem('token', token);
-    this.loggedIn.next(true); 
+    this.loggedIn.next(true);
+    // this.isAdminTemp.next(true);
+    this.isAdmin().subscribe((response) => {
+      if(response.message == "true"){
+        this.isAdminTemp.next(true);
+      }
+    })
     this.router.navigate(['']);
   }
 
   logout(): void {
     localStorage.removeItem('token');
     this.loggedIn.next(false);
+    this.isAdminTemp.next(false);
   }
 }

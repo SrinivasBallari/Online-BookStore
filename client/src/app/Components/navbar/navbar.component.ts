@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 export class NavbarComponent {
   
   isLoggedIn: boolean = false;
+  isAdmin : boolean = false;
   searchQuery: string = ''; 
 
   constructor(private authService: AuthService, private router: Router) {}
@@ -23,7 +24,20 @@ export class NavbarComponent {
     this.authService.isLoggedIn.subscribe((status : boolean) => {
       this.isLoggedIn = status;
     });
+
+    this.authService.isAdmin().subscribe((response) => {
+      if(response.message == "true"){
+        this.authService.isAdminTemp.next(true);
+        this.isAdmin = true;
+      }
+    });
+
+    this.authService.isUserAdmin.subscribe((status : boolean) => {
+      this.isAdmin = status;
+    });
+    
   }
+  
   onSearch(): void {
     // Only navigate if the search query is not empty
     if (this.searchQuery.trim()) {

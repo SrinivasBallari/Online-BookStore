@@ -20,6 +20,8 @@ export class BookDetailComponent implements OnInit {
   bookId: number | null = null;
   quantity: number = 1;
   averageRating: number = 0;
+  errorMessage: string | null = null;
+  successMessage: string | null = null;
   
   userRating: number = 5;
   userReview: string = '';
@@ -73,13 +75,19 @@ export class BookDetailComponent implements OnInit {
         review: this.userReview
       };
       this.bookService.postReview(rev).subscribe((response) => {
-        alert(response.statusMessage);
+        this.errorMessage = `${response.status}`;
+        setTimeout(() => {
+          this.errorMessage = null;
+        }, 3000);
         this.fetchReviews();
         this.userRating = 5;
         this.userReview = '';
       });
     }else{
-      alert("Rating / Review Cannot be empty !!");
+      this.errorMessage = "Rating/ Review Cannot be empty!!";
+      setTimeout(() => {
+        this.errorMessage = null;
+      }, 3000);
     }
   }
 
@@ -87,7 +95,12 @@ export class BookDetailComponent implements OnInit {
     if(this.bookId != null){
       this.cartService.addToCart(this.bookId).subscribe((response) => {
         if(response){
-          alert("Book added to cart !!");
+          this.successMessage = `Book added to cart!!`; 
+         
+          setTimeout(() => {
+            this.successMessage = null;
+          }, 3000);
+         
         }
       });
     }

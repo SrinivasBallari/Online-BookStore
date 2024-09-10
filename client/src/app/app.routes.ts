@@ -7,6 +7,7 @@ import { CartComponent } from './Components/cart/cart.component';
 import { UserProfileComponent } from './Components/user-profile/user-profile.component';
 import { AdminBooksComponent } from './Components/admin-books/admin-books.component';
 import { SearchComponent } from './Components/search/search.component';
+import { AdminOrdersComponent } from './Components/admin-orders/admin-orders.component';
 
 export const routes: Routes = [
     {
@@ -36,6 +37,10 @@ export const routes: Routes = [
     {
         path: 'admin/books',
         component : AdminBooksComponent
+    },
+    {
+        path: 'admin/orders',
+        component : AdminOrdersComponent
     },
     { path: 'search', component: SearchComponent },
 ];
