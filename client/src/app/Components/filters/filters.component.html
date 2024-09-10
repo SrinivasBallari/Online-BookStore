@@ -18,21 +18,7 @@
         </div>
       </div>
 
-      <div>
-        <h5>Languages</h5>
-        <div *ngFor="let language of languages" class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            [id]="language"
-            [checked]="selectedLanguages.has(language)"
-            (change)="onCheckboxChange('language', language, $event)"
-          />
-          <label class="form-check-label" [for]="language">{{
-            language
-          }}</label>
-        </div>
-      </div>
+      
     </div>
     <div class="row">
       <div >
